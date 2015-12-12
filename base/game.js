@@ -95,7 +95,7 @@ Game.draw = function() {
 	this.scene.draw();
 
 	if (Game.fpsDisplayEnabled) {
-		context.font="14px Courier";
+		context.font = "14px Courier";
 		context.fillStyle = "#ddf"
 		context.fillText("updates/s: " + Game.prevUpdatesCounter, 10, 20);
 		context.fillText("draws/s:   " + Game.prevDrawCounter, 10, 36);
