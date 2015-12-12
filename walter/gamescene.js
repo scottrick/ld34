@@ -210,15 +210,27 @@ GameScene.prototype.setupLevel = function() {
 
 GameScene.prototype.setupBase = function() {
 	{
-		var entity = new Entity("title text");	
+		var walterWidth = 32;
+		var walterHidth = 60;
+
+		var entity = new Entity("Walter");	
+		entity.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
+
+		var imageDrawable = new ImageDrawable(this.game.getImages().getWalter());
+		entity.addComponent(imageDrawable);
+
+		this.addEntity(entity);
+	}
+
+
+	{
+		var entity = new Entity("TEXT");	
 		entity.addComponent(new Transform(new Vector(400, 300), null, -6));
-		
 		var textComponent = new TextDrawable("GAME SCENE");
 		textComponent.font = "72px Courier";
 		textComponent.fontColor = "#0a0";
 		textComponent.alignment = "center"
 		entity.addComponent(textComponent);
-
 		this.addEntity(entity);
 	}
 
