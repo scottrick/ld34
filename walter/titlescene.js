@@ -10,11 +10,24 @@ function TitleScene(game) {
 	this.setup();
 }
 
+TitleScene.prototype.handleKeyDown = function(key) {
+
+}
+
+TitleScene.prototype.handleKeyUp = function(key) {
+	console.log("key: " + key);
+
+	if (key == 32) {
+		//SPACEBAR start the game
+		this.game.setNextScene(new GameScene(this.game));
+	}
+}
+
 TitleScene.prototype.setup = function() {
 	{
 		var titleTextEntity = new Entity("title text");	
 		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, -6));
-		var textComponent = new TextDrawable("Walter the Wise:");
+		var textComponent = new TextDrawable("Walter the Wise");
 		textComponent.font = "72px Courier";
 		textComponent.fontColor = WalterColors.owlLightBrown;
 
@@ -27,12 +40,22 @@ TitleScene.prototype.setup = function() {
 	{
 		var subtitleTextEntity = new Entity("subtitle text");	
 		subtitleTextEntity.addComponent(new Transform(new Vector(400, 224), null, 0));
-		var textComponent = new TextDrawable("Wizard for Hire!");
+		var textComponent = new TextDrawable("Wizard for Hire");
 		textComponent.font = "40px Courier";
 		textComponent.fontColor = WalterColors.owlLightBrown;
 		textComponent.alignment = "center"
 		subtitleTextEntity.addComponent(textComponent);
 		this.addEntity(subtitleTextEntity);
+	}
+
+	{
+		var entity = new Entity("start game text");	
+		entity.addComponent(new Transform(new Vector(20, 400), null, 0));
+		var textComponent = new TextDrawable("[spacebar to start]");
+		textComponent.font = "24px Courier";
+		textComponent.fontColor = WalterColors.owlLightBrown;
+		entity.addComponent(textComponent);
+		this.addEntity(entity);
 	}
 
 	{
