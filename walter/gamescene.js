@@ -90,13 +90,27 @@ GameScene.prototype.hideHelp = function() {
 
 GameScene.prototype.setupHelp = function() {
 	{
-		var entity = new Entity("help background");	
+		var entity = new Entity("help full background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(0, 0, 800, 600));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.owlLightBrown;
+		rectDrawable.alpha = 0.35;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.helpEntities.push(entity);
+	}
+	{
+		var entity = new Entity("help popup background");	
 		entity.addComponent(new Transform());
 
 		var rectDrawable = new RectDrawable(new Rect(100, 100, 600, 400));
 		rectDrawable.fillColor = "#000";
 		rectDrawable.strokeColor = WalterColors.owlLightBrown;
-		rectDrawable.alpha = 0.9;
+		rectDrawable.alpha = 0.6;
 		rectDrawable.z = 10;
 		entity.addComponent(rectDrawable);
 
