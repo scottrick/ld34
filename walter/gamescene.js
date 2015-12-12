@@ -12,6 +12,8 @@ function GameScene(game, level, showHelp) {
 
     this.level = level;
 
+	this.addSystem(new MovementSystem());
+
 	this.setupHelp();
     this.setupBase();
 	this.setupLevel();
@@ -209,19 +211,46 @@ GameScene.prototype.setupLevel = function() {
 }
 
 GameScene.prototype.setupBase = function() {
-	{
-		var walterWidth = 32;
-		var walterHidth = 60;
+	var walterWidth = 32;
+	var walterHidth = 60;
+	
+	var wingWidth = 28;
+	var wingHeight = 32;
 
+	{
 		var entity = new Entity("Walter");	
 		entity.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
 
 		var imageDrawable = new ImageDrawable(this.game.getImages().getWalter());
+		imageDrawable.z = 5;
 		entity.addComponent(imageDrawable);
 
 		this.addEntity(entity);
 	}
 
+	{
+		var entity = new Entity("Wing Right");	
+		entity.addComponent(new Transform(new Vector(400 + 1, 540 - walterHidth / 3 * 2), null, 0));
+
+		var wingImage = this.game.getImages().getRightWing();
+		var imageDrawable = new ImageDrawable(wingImage, new Rect(0, 0, wingWidth, wingHeight));
+		imageDrawable.z = 4;
+		entity.addComponent(imageDrawable);
+
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("Wing Left");	
+		entity.addComponent(new Transform(new Vector(400 + 0, 540 - walterHidth / 3 * 2), null, 0));
+
+		var wingImage = this.game.getImages().getLeftWing();
+		var imageDrawable = new ImageDrawable(wingImage, new Rect(0, 0, -wingWidth, wingHeight));
+		imageDrawable.z = 4;
+		entity.addComponent(imageDrawable);
+
+		this.addEntity(entity);
+	}
 
 	{
 		var entity = new Entity("TEXT");	

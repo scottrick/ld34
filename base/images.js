@@ -8,6 +8,9 @@ function Images(document) {
 	this.levelback = document.getElementById("levelback");
 	this.owlPixel = document.getElementById("owlPixel");
 	this.walter = document.getElementById("walter");
+	this.walterPixel = document.getElementById("walterPixel");
+	this.leftWing = document.getElementById("leftWing");
+	this.rightWing = document.getElementById("rightWing");
 }
 
 Images.prototype.getDefaultImage = function() {
@@ -24,6 +27,18 @@ Images.prototype.getGround = function() {
 
 Images.prototype.getWalter = function() {
 	return this.walter;
+}
+
+Images.prototype.getWalterPixel = function() {
+	return this.walterPixel;
+}
+
+Images.prototype.getLeftWing = function() {
+	return this.leftWing;
+}
+
+Images.prototype.getRightWing = function() {
+	return this.rightWing;
 }
 
 Images.prototype.getLevelBackground = function() {
