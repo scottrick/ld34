@@ -82,7 +82,7 @@ TitleScene.prototype.setup = function() {
 
 		var rectDrawable = new RectDrawable(new Rect(0, 58, 800, 192));
 		rectDrawable.fillColor = "#000";
-		rectDrawable.alpha = 0.35;
+		rectDrawable.alpha = 0.5;
 		rectDrawable.lineWidth = "2";
 		rectDrawable.z = -5;
 		entity.addComponent(rectDrawable);

@@ -60,7 +60,7 @@ GameScene.prototype.setupHelp = function() {
 		var rectDrawable = new RectDrawable(new Rect(100, 100, 600, 400));
 		rectDrawable.fillColor = "#000";
 		rectDrawable.strokeColor = WalterColors.owlLightBrown;
-		rectDrawable.alpha = 0.85;
+		rectDrawable.alpha = 0.9;
 		rectDrawable.z = 10;
 		entity.addComponent(rectDrawable);
 
