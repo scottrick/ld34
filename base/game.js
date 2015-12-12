@@ -147,13 +147,13 @@ Game.handleKeyUp = function(key) {
 	}
 
 	if (key == 78) { // n
-		this.setNextScene(new TestScene(this));
+		this.setNextScene(new TitleScene(this));
 	}
 }
 
 Game.reset = function() {
 	this.scene = null;
-	this.scene = new TestScene(this);
+	this.scene = new TitleScene(this);
 }
 
 Game.setMusic = function(music) {

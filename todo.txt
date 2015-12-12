@@ -1,0 +1,10 @@
+text entity
+
+
+make title scene
+make game scene
+make end game scene
+
+WALTER the WISE: Wizard for Hire   
+	(the R's are backwards)
+
