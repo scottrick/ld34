@@ -230,4 +230,13 @@ GameScene.prototype.setupBase = function() {
 		entity.addComponent(imageDrawable);
 		this.addEntity(entity);
 	}
+
+	{
+		var entity = new Entity("background");	
+		entity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getLevelBackground(), new Rect(0, 0, 800, 540));
+		imageDrawable.z = -11;
+		entity.addComponent(imageDrawable);
+		this.addEntity(entity);
+	}
 }

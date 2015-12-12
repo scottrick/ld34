@@ -5,6 +5,7 @@ function Images(document) {
 
 	this.forestSmall = document.getElementById("forestSmall");
 	this.ground = document.getElementById("ground");
+	this.levelback = document.getElementById("levelback");
 }
 
 Images.prototype.getDefaultImage = function() {
@@ -17,6 +18,10 @@ Images.prototype.getForestBackground = function() {
 
 Images.prototype.getGround = function() {
 	return this.ground;
+}
+
+Images.prototype.getLevelBackground = function() {
+	return this.levelback;
 }
 
 Images.prototype.getSplashWalter = function() {
