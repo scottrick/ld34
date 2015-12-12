@@ -5,7 +5,7 @@ function GameScene(game, level, showHelp) {
 	Scene.call(this, game);
 
 	this.dumpDelay = 1;
-    this.slowMotionSpeed = 0.1;
+    this.slowMotionSpeed = 0.25;
 
     this.isHelpShowning = false;
     this.helpEntities = [];
@@ -13,7 +13,11 @@ function GameScene(game, level, showHelp) {
     this.level = level;
 
 	this.addSystem(new MovementSystem());
+	this.addSystem(new WalterSystem());
 	this.addSystem(new WingSystem());
+	this.addSystem(new FireSystem());
+	this.addSystem(new FlameSystem());
+	this.addSystem(new BoundarySystem(new Rect(-100, -100, 1000, 800)));
 
 	this.setupHelp();
     this.setupBase();
@@ -30,13 +34,13 @@ function GameScene(game, level, showHelp) {
 GameScene.prototype.handleKeyDown = function(key) {
 	Scene.prototype.handleKeyDown.call(this, key);
 
-	// if (key == 65) { // A
-	// 	this.leftWing.wave();
-	// }
+	if (key == 65) { // A
+		this.walter.aDown();
+	}
 
-	// if (key == 76) { // L
-	// 	this.rightWing.wave();
-	// }
+	if (key == 76) { // L
+		this.walter.lDown();
+	}
 }
 
 GameScene.prototype.handleKeyUp = function(key) {
@@ -56,11 +60,11 @@ GameScene.prototype.handleKeyUp = function(key) {
 	}
 
 	if (key == 65) { // A
-		this.leftWing.wave();
+		this.walter.aUp();
 	}
 
 	if (key == 76) { // L
-		this.rightWing.wave();
+		this.walter.lUp();
 	}
 }
 
@@ -239,17 +243,6 @@ GameScene.prototype.setupBase = function() {
 	var wingHeight = 32;
 
 	{
-		this.walter = new Entity("Walter");	
-		this.walter.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
-
-		var imageDrawable = new ImageDrawable(this.game.getImages().getWalter());
-		imageDrawable.z = 5;
-		this.walter.addComponent(imageDrawable);
-
-		this.addEntity(this.walter);
-	}
-
-	{
 		var entity = new Entity("Wing Right");	
 		var transform = new Transform(new Vector(400 + 5, 540 - walterHidth / 3 * 2), null, 0);
 		entity.addComponent(transform);
@@ -278,6 +271,20 @@ GameScene.prototype.setupBase = function() {
 
 		this.leftWing = new Wing(transform.copy());
 		entity.addComponent(this.leftWing);
+
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("Walter");	
+		entity.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
+
+		var imageDrawable = new ImageDrawable(this.game.getImages().getWalter());
+		imageDrawable.z = 5;
+		entity.addComponent(imageDrawable);
+
+		this.walter = new Walter(this.rightWing, this.leftWing, this);
+		entity.addComponent(this.walter);
 
 		this.addEntity(entity);
 	}

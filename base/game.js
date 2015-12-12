@@ -145,6 +145,10 @@ Game.handleKeyUp = function(key) {
 		if (key == 78) { // n
 			this.setNextScene(new TitleScene(this));
 		}
+
+		if (key == 68) { // d
+			this.scene.debugDump();
+		}
 	}
 }
 

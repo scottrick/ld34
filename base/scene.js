@@ -111,6 +111,14 @@ Scene.prototype.toString = function() {
 	return "Scene has " + this.entities.length + " entities.";
 }
 
+Scene.prototype.debugDump = function() {
+	console.log("Scene Debug Dump");
+	for (var e = 0, len = this.entities.length; e < len; e++) {
+		var entity = this.entities[e];
+		console.log("entity[" + e + "]=" + entity);
+	}
+}
+
 Scene.prototype.handleKeyDown = function(key) {
 
 }

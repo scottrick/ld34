@@ -32,5 +32,5 @@ Entity.prototype.dump = function() {
 };
 
 Entity.prototype.toString = function() {
-	return "Entity [" + this.name + "] " + this.components;
+	return "Entity [" + this.name + "]";
 }

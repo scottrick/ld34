@@ -11,7 +11,37 @@ function Images(document) {
 	this.walterPixel = document.getElementById("walterPixel");
 	this.leftWing = document.getElementById("leftWing");
 	this.rightWing = document.getElementById("rightWing");
+
+	this.flames = []; 
+	this.flames.push(document.getElementById("flame1"));
+	this.flames.push(document.getElementById("flame2"));
+	this.flames.push(document.getElementById("flame3"));
+	this.flameIndex = 0;
+
+	this.smokes = []; 
+	this.smokes.push(document.getElementById("smoke1"));
+	this.smokes.push(document.getElementById("smoke2"));
+	this.smokes.push(document.getElementById("smoke3"));
+	this.smokeIndex = 0;
+
+	this.fireball = document.getElementById("fireball");
 }
+
+Images.prototype.getNextFlame = function() {
+	var currentIndex = this.flameIndex;
+	this.flameIndex = (this.flameIndex + 1) % this.flames.length;
+	return this.flames[currentIndex];
+};
+
+Images.prototype.getNextSmoke = function() {
+	var currentIndex = this.smokeIndex;
+	this.smokeIndex = (this.smokeIndex + 1) % this.smokes.length;
+	return this.smokes[currentIndex];
+};
+
+Images.prototype.getFireball = function() {
+	return this.fireball;
+};
 
 Images.prototype.getDefaultImage = function() {
 	return this.defaultImage;
