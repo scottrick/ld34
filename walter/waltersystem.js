@@ -19,4 +19,13 @@ WalterSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 			/* start channeling */
 		}
 	}
+
+	if (walter.leftDown) {
+		walter.leftDownDuration += deltaTime;
+
+		if (walter.leftDownDuration >= Walter.channelStartDuration) {
+			/* start channeling */
+		}
+	}
+
 }
