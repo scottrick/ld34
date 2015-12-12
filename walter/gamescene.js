@@ -290,6 +290,13 @@ GameScene.prototype.setupBase = function() {
 	}
 
 	{
+		var entity = new Entity("test");	
+		entity.addComponent(new Transform(new Vector(150, 540), new Vector(20, 20), null, 6));
+		entity.addComponent(new Fire(10));
+		// this.addEntity(entity);
+	}
+
+	{
 		var entity = new Entity("ground");	
 		entity.addComponent(new Transform());
 		var imageDrawable = new ImageDrawable(this.game.getImages().getGround(), new Rect(0, 540, 800, 60));

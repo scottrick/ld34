@@ -3,15 +3,15 @@ Fire.prototype.constructor = Fire;
 
 Fire.type = "fire";
 
-Fire.xVelocityRange = 100;
-Fire.yVelocityBase = -200;
-Fire.yVelocityRange = -200;
+Fire.xVelocityRange = 8;
+Fire.yVelocityBase = -2;
+Fire.yVelocityRange = -2;
 
-Fire.minTime = 0.02;
-Fire.baseTimeToFlame = 0.05;
+Fire.minTime = 0.03;
+Fire.baseTimeToFlame = 0.03;
 Fire.baseTimeToSmoke = 0.1;
 
-function Fire() {
+function Fire(intensity) {
 	Component.call(this, Fire.type);
 
 	this.timeToFlame = 0;
@@ -19,6 +19,13 @@ function Fire() {
 
 	this.timeToSmoke = 0;
 	this.currentSmokeTime = 0;
+
+	if (intensity == null) {
+		this.intensity = 1.0;
+	}
+	else {
+		this.intensity = intensity;
+	}
 
 	this.randomTimeToFlame();
 	this.randomTimeToSmoke();
@@ -42,7 +49,7 @@ Fire.prototype.emit = function(scene, transform, image, alpha) {
 	drawable.alpha = alpha;
 	var newTransform = transform.copy();
 	var movement = new Movement(
-		new Vector((Math.random() - 0.5) * Fire.xVelocityRange, Fire.yVelocityBase + Math.random() * Fire.xVelocityRange), 
+		new Vector((Math.random() - 0.5) * Fire.xVelocityRange * transform.scale.x, (Fire.yVelocityBase + Math.random()) * Fire.xVelocityRange * transform.scale.y), 
 		null, 
 		(Math.random() - 0.5) * 720);
 
@@ -55,9 +62,9 @@ Fire.prototype.emit = function(scene, transform, image, alpha) {
 }
 
 Fire.prototype.randomTimeToFlame = function() {
-	this.timeToFlame = Fire.minTime + Math.random() * Fire.baseTimeToFlame;
+	this.timeToFlame = (Fire.minTime + Math.random() * Fire.baseTimeToFlame) / this.intensity;
 }
 
 Fire.prototype.randomTimeToSmoke = function() {
-	this.timeToSmoke = Fire.minTime + Math.random() * Fire.baseTimeToSmoke;
+	this.timeToSmoke = (Fire.minTime + Math.random() * Fire.baseTimeToSmoke) / this.intensity;
 }

@@ -16,9 +16,11 @@ DrawSystem.prototype.addEntities = function(entities) {
 		var entity = entities[i];
 		var drawable = entity.components[Drawable.type];
 		var transform = entity.components[Transform.type];
-		entity.zCache = drawable.z + transform.z;
 
-		this.entities.push(entity);
+		if (drawable != null && transform != null) {
+			entity.zCache = drawable.z + transform.z;
+			this.entities.push(entity);
+		}
 	}
 
 	/* sort drawables array */

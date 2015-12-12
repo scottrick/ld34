@@ -40,8 +40,10 @@ Walter.prototype.fireRightNormal = function() {
 	var position = this.rightWing.baseTransform.position.copy();
 	position.y += 10;
 	position.x += 16;
+
 	var transform = new Transform(position, new Vector(18, 18));
 	transform.z = 6;
+
 	var movement = new Movement(new Vector(500, 0), null, (Math.random() - 0.5) * 1440);
 	var drawable = new ImageDrawable(this.scene.game.getImages().getFireball());
 
