@@ -18,15 +18,15 @@ TitleScene.prototype.handleKeyUp = function(key) {
 	console.log("key: " + key);
 
 	if (key == 32) {
-		//SPACEBAR start the game
-		this.game.setNextScene(new GameScene(this.game));
+		//SPACEBAR start the game at the first level
+		this.game.setNextScene(new GameScene(this.game, null, true));
 	}
 }
 
 TitleScene.prototype.setup = function() {
 	{
 		var titleTextEntity = new Entity("title text");	
-		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, -6));
+		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, -5));
 		var textComponent = new TextDrawable("Walter the Wise");
 		textComponent.font = "72px Courier";
 		textComponent.fontColor = WalterColors.owlLightBrown;
@@ -60,8 +60,8 @@ TitleScene.prototype.setup = function() {
 
 	{
 		var walterSplashEntity = new Entity("walter corner");	
-		walterSplashEntity.addComponent(new Transform(new Vector(602, 359), new Vector(396, 482)));
-		var imageDrawable = new ImageDrawable(this.game.getImages().getSplashWalter());
+		walterSplashEntity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getSplashWalter(), new Rect(404, 118, 396, 482));
 		imageDrawable.z = -10;
 		walterSplashEntity.addComponent(imageDrawable);
 		this.addEntity(walterSplashEntity);
@@ -69,8 +69,8 @@ TitleScene.prototype.setup = function() {
 
 	{
 		var forestBackgroundEntity = new Entity("forest background");	
-		forestBackgroundEntity.addComponent(new Transform(new Vector(400, 300), new Vector(800, 600)));
-		var imageDrawable = new ImageDrawable(this.game.getImages().getForestBackground());
+		forestBackgroundEntity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getForestBackground(), new Rect(0, 0, 800, 600));
 		imageDrawable.z = -11;
 		forestBackgroundEntity.addComponent(imageDrawable);
 		this.addEntity(forestBackgroundEntity);

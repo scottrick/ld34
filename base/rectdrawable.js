@@ -4,7 +4,6 @@ RectDrawable.prototype.constructor = RectDrawable;
 function RectDrawable(rect) {
 	Component.call(this, Drawable.type);
 
-
 	if (rect == null) {
 		this.rect = new Rect(-0.5, -0.5, 1, 1);
 	}

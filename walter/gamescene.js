@@ -1,7 +1,7 @@
 GameScene.prototype = new Scene();
 GameScene.prototype.constructor = GameScene;
 
-function GameScene(game) {
+function GameScene(game, level, showHelp) {
 	Scene.call(this, game);
 
 	this.dumpDelay = 1;
@@ -10,9 +10,18 @@ function GameScene(game) {
     this.isHelpShowning = false;
     this.helpEntities = [];
 
-	this.setup();
+    this.level = level;
 
-	this.showHelp();
+	this.setupHelp();
+    this.setupBase();
+	this.setupLevel();
+
+	if (showHelp) {
+		this.showHelp();
+	}
+	else {
+		this.hideHelp();
+	}
 }
 
 GameScene.prototype.handleKeyDown = function(key) {
@@ -195,9 +204,11 @@ GameScene.prototype.setupHelp = function() {
 	}
 }
 
-GameScene.prototype.setup = function() {
-	this.setupHelp();
+GameScene.prototype.setupLevel = function() {
 
+}
+
+GameScene.prototype.setupBase = function() {
 	{
 		var entity = new Entity("title text");	
 		entity.addComponent(new Transform(new Vector(400, 300), null, -6));
@@ -208,6 +219,15 @@ GameScene.prototype.setup = function() {
 		textComponent.alignment = "center"
 		entity.addComponent(textComponent);
 
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("ground");	
+		entity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getGround(), new Rect(0, 540, 800, 60));
+		imageDrawable.z = -11;
+		entity.addComponent(imageDrawable);
 		this.addEntity(entity);
 	}
 }
