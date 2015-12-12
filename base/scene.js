@@ -28,8 +28,14 @@ Scene.prototype.draw = function() {
 }
 
 Scene.prototype.update = function(deltaTime) {
+	/* scale the deltaTime by the scene update speed */
+	var sceneDeltaTime = deltaTime * this.getUpdateSpeed();
+
 	this.doEntityMaintenance();
-	this.updateSystems(deltaTime);
+
+	if (!this.isPaused()) {
+		this.updateSystems(sceneDeltaTime);
+	}
 
 	this.dumpTimer += deltaTime;
 	if (this.dumpTimer >= this.dumpDelay) {
@@ -57,7 +63,7 @@ Scene.prototype.updateSystem = function(system, deltaTime) {
 	for (var e = 0, len = this.entities.length; e < len; e++) {
 		var entity = this.entities[e];
 
-		if (system.checkEntity(entity)) {
+		if (entity.enabled && system.checkEntity(entity)) {
 			system.handleEntity(this, entity, deltaTime);
 		}
 	}

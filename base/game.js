@@ -111,14 +111,7 @@ Game.update = function() {
 		this.nextScene = null;
 	}
 
-	if (this.scene.isPaused()) {
-		return;
-	}
-
 	var deltaTime = 1 / Game.updatesPerSecond;
-
-	/* scale the deltaTime by the scene update speed */
-	deltaTime = deltaTime * this.scene.getUpdateSpeed();
 
 	this.time += deltaTime;
 

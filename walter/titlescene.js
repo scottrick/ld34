@@ -50,7 +50,7 @@ TitleScene.prototype.setup = function() {
 
 	{
 		var entity = new Entity("start game text");	
-		entity.addComponent(new Transform(new Vector(20, 400), null, 0));
+		entity.addComponent(new Transform(new Vector(20, 440), null, 0));
 		var textComponent = new TextDrawable("[spacebar to start]");
 		textComponent.font = "24px Courier";
 		textComponent.fontColor = WalterColors.owlLightBrown;
@@ -62,7 +62,7 @@ TitleScene.prototype.setup = function() {
 		var walterSplashEntity = new Entity("walter corner");	
 		walterSplashEntity.addComponent(new Transform(new Vector(602, 359), new Vector(396, 482)));
 		var imageDrawable = new ImageDrawable(this.game.getImages().getSplashWalter());
-		imageDrawable.z = -1;
+		imageDrawable.z = -10;
 		walterSplashEntity.addComponent(imageDrawable);
 		this.addEntity(walterSplashEntity);
 	}
@@ -71,8 +71,22 @@ TitleScene.prototype.setup = function() {
 		var forestBackgroundEntity = new Entity("forest background");	
 		forestBackgroundEntity.addComponent(new Transform(new Vector(400, 300), new Vector(800, 600)));
 		var imageDrawable = new ImageDrawable(this.game.getImages().getForestBackground());
-		imageDrawable.z = -2;
+		imageDrawable.z = -11;
 		forestBackgroundEntity.addComponent(imageDrawable);
 		this.addEntity(forestBackgroundEntity);
+	}
+
+	{
+		var entity = new Entity("dark text background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(0, 58, 800, 192));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.alpha = 0.35;
+		rectDrawable.lineWidth = "2";
+		rectDrawable.z = -5;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
 	}
 }

@@ -50,7 +50,9 @@ DrawSystem.prototype.draw = function(context) {
 	this.drawCount = 0;
 
 	for (var i = 0, len = this.entities.length; i < len; i++) {
-		this.drawEntity(context, this.entities[i]);
+		if (this.entities[i].enabled) {
+			this.drawEntity(context, this.entities[i]);
+		}
 	}
 }
 
