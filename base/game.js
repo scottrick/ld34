@@ -14,20 +14,20 @@ var context = canvas.getContext("2d");
 var theImages = new Images(document);
 var theSounds = new Sounds(document);
 
-//state variables
-var keysDown = {};
+var Game = { };
+
+//key state variables
+Game.keysDown = {};
 
 addEventListener("keydown", function (e) {
-		keysDown[e.keyCode] = true;
+		Game.keysDown[e.keyCode] = true;
 		Game.handleKeyDown(e.keyCode);
 }, false);
 
 addEventListener("keyup", function (e) {
-		delete keysDown[e.keyCode];
+		delete Game.keysDown[e.keyCode];
 		Game.handleKeyUp(e.keyCode);
 }, false);
-
-var Game = { };
 
 Game.DEBUG = true;
 

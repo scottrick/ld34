@@ -116,8 +116,10 @@ Scene.prototype.handleKeyDown = function(key) {
 }
 
 Scene.prototype.handleKeyUp = function(key) {
-	if (key == 83) { //s
-		this.toggleSlowMotion();
+	if (Game.DEBUG) {
+		if (key == 83) { //s
+			this.toggleSlowMotion();
+		}
 	}
 }
 

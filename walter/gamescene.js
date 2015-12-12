@@ -5,7 +5,7 @@ function GameScene(game, level, showHelp) {
 	Scene.call(this, game);
 
 	this.dumpDelay = 1;
-    this.slowMotionSpeed = 0.05;
+    this.slowMotionSpeed = 0.1;
 
     this.isHelpShowning = false;
     this.helpEntities = [];
@@ -13,6 +13,7 @@ function GameScene(game, level, showHelp) {
     this.level = level;
 
 	this.addSystem(new MovementSystem());
+	this.addSystem(new WingSystem());
 
 	this.setupHelp();
     this.setupBase();
@@ -27,19 +28,39 @@ function GameScene(game, level, showHelp) {
 }
 
 GameScene.prototype.handleKeyDown = function(key) {
+	Scene.prototype.handleKeyDown.call(this, key);
 
+	// if (key == 65) { // A
+	// 	this.leftWing.wave();
+	// }
+
+	// if (key == 76) { // L
+	// 	this.rightWing.wave();
+	// }
 }
 
 GameScene.prototype.handleKeyUp = function(key) {
-	console.log("key: " + key);
+	Scene.prototype.handleKeyUp.call(this, key);
 
-	if (key == 72) { // h
+	if (key == 72) { // H
 		if (this.isHelpShowning) {
 			this.hideHelp();
 		}
 		else {
 			this.showHelp();
 		}
+	}
+
+	if (this.isPaused()) {
+		return;
+	}
+
+	if (key == 65) { // A
+		this.leftWing.wave();
+	}
+
+	if (key == 76) { // L
+		this.rightWing.wave();
 	}
 }
 
@@ -218,48 +239,46 @@ GameScene.prototype.setupBase = function() {
 	var wingHeight = 32;
 
 	{
-		var entity = new Entity("Walter");	
-		entity.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
+		this.walter = new Entity("Walter");	
+		this.walter.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
 
 		var imageDrawable = new ImageDrawable(this.game.getImages().getWalter());
 		imageDrawable.z = 5;
-		entity.addComponent(imageDrawable);
+		this.walter.addComponent(imageDrawable);
 
-		this.addEntity(entity);
+		this.addEntity(this.walter);
 	}
 
 	{
 		var entity = new Entity("Wing Right");	
-		entity.addComponent(new Transform(new Vector(400 + 1, 540 - walterHidth / 3 * 2), null, 0));
+		var transform = new Transform(new Vector(400 + 5, 540 - walterHidth / 3 * 2), null, 0);
+		entity.addComponent(transform);
 
 		var wingImage = this.game.getImages().getRightWing();
 		var imageDrawable = new ImageDrawable(wingImage, new Rect(0, 0, wingWidth, wingHeight));
 		imageDrawable.z = 4;
 		entity.addComponent(imageDrawable);
 
+		this.rightWing = new Wing(transform.copy());
+		this.rightWing.waveDeltaX = -this.rightWing.waveDeltaX; 
+		entity.addComponent(this.rightWing);
+
 		this.addEntity(entity);
 	}
 
 	{
 		var entity = new Entity("Wing Left");	
-		entity.addComponent(new Transform(new Vector(400 + 0, 540 - walterHidth / 3 * 2), null, 0));
+		var transform = new Transform(new Vector(400 - 4, 540 - walterHidth / 3 * 2), null, 0);
+		entity.addComponent(transform);
 
 		var wingImage = this.game.getImages().getLeftWing();
 		var imageDrawable = new ImageDrawable(wingImage, new Rect(0, 0, -wingWidth, wingHeight));
 		imageDrawable.z = 4;
 		entity.addComponent(imageDrawable);
 
-		this.addEntity(entity);
-	}
+		this.leftWing = new Wing(transform.copy());
+		entity.addComponent(this.leftWing);
 
-	{
-		var entity = new Entity("TEXT");	
-		entity.addComponent(new Transform(new Vector(400, 300), null, -6));
-		var textComponent = new TextDrawable("GAME SCENE");
-		textComponent.font = "72px Courier";
-		textComponent.fontColor = "#0a0";
-		textComponent.alignment = "center"
-		entity.addComponent(textComponent);
 		this.addEntity(entity);
 	}
 
