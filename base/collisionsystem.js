@@ -4,12 +4,14 @@ CollisionSystem.prototype.constructor = CollisionSystem;
 /*
 	CollisionSystem detects collisions between different entities with a PhysicsBody and a Transform.
 */
-function CollisionSystem() {
+function CollisionSystem(collisionHandler) {
 	System.call(this, [PhysicsBody.type, Transform.type]);
 
 	//level, startBounds, endBounds
 	this.quadtree = new Quadtree(0, new Rect(0, 0, 800, 600));
 	this.entities = [];
+
+	this.collisionHandler = collisionHandler;
 }
 
 CollisionSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
@@ -64,8 +66,13 @@ CollisionSystem.prototype.frameWorkEnd = function(scene, deltaTime) {
 	for (var i = 0; i < collisionEvents.length; i++) {
 		var event = collisionEvents[i];
 
-		scene.removeEntity(event.entity1);
-		scene.removeEntity(event.entity2);
+		if (this.collisionHandler != null) {
+			this.collisionHandler.handleCollisionEvent(event);
+		}
+		else {
+			scene.removeEntity(event.entity1);
+			scene.removeEntity(event.entity2);
+		}
 	}
 }
 

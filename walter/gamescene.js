@@ -17,7 +17,8 @@ function GameScene(game, level, showHelp) {
 	this.addSystem(new WingSystem());
 	this.addSystem(new FireSystem());
 	this.addSystem(new FlameSystem());
-	this.addSystem(new BoundarySystem(new Rect(-100, -100, 1000, 800)));
+	this.addSystem(new CollisionSystem(this));
+	this.addSystem(new BoundarySystem(new Rect(-50, -50, 900, 700)));
 
 	this.setupHelp();
     this.setupBase();
@@ -29,6 +30,11 @@ function GameScene(game, level, showHelp) {
 	else {
 		this.hideHelp();
 	}
+}
+
+GameScene.prototype.handleCollisionEvent = function(event) {
+	//event.entity1
+	//event.entity2
 }
 
 GameScene.prototype.handleKeyDown = function(key) {

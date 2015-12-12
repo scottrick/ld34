@@ -42,7 +42,7 @@ Walter.prototype.lUp = function() {
 }
 
 Walter.prototype.fireRightNormal = function() {
-	var fireEntity = new Entity("fireRightNormal");
+	var fireEntity = new Entity("fireball");
 	var position = this.rightWing.baseTransform.position.copy();
 	position.y += 10;
 	position.x += 16;
@@ -56,6 +56,7 @@ Walter.prototype.fireRightNormal = function() {
 	fireEntity.addComponent(transform);
 	fireEntity.addComponent(movement);
 	fireEntity.addComponent(drawable);
+	fireEntity.addComponent(new CircleBody());
 	fireEntity.addComponent(new Fire());
 
 	this.scene.addEntity(fireEntity);
@@ -66,7 +67,7 @@ Walter.prototype.fireRightCharged = function(chargeDuration) {
 }
 
 Walter.prototype.fireLeftNormal = function() {
-	var fireEntity = new Entity("fireLeftNormal");
+	var fireEntity = new Entity("fireball");
 	var position = this.rightWing.baseTransform.position.copy();
 	position.y += 10;
 	position.x -= 16;
@@ -80,6 +81,7 @@ Walter.prototype.fireLeftNormal = function() {
 	fireEntity.addComponent(transform);
 	fireEntity.addComponent(movement);
 	fireEntity.addComponent(drawable);
+	fireEntity.addComponent(new CircleBody());
 	fireEntity.addComponent(new Fire());
 
 	this.scene.addEntity(fireEntity);
@@ -88,10 +90,6 @@ Walter.prototype.fireLeftNormal = function() {
 Walter.prototype.fireLeftCharged = function(chargeDuration) {
 	console.log("fire LEFT charged: " + chargeDuration);
 }
-
-
-
-
 
 Walter.prototype.aDown = function() {
 	this.leftDown = true;
