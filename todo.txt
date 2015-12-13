@@ -1,6 +1,8 @@
 MUST HAVE
 ----------------------
 lightning sparks
+	-> auto cast lightning, while channeling?  this way you would hold down lightnig to get the stuff on the top 
+	-> OR actually, maybe just shoot 3 lightning bolts per cast?
 
 lose if something hits you?
 
