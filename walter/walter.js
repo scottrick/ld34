@@ -162,8 +162,35 @@ Walter.prototype.startChannelingLeft = function() {
 }
 
 Walter.prototype.fireLeftCharged = function(chargeDuration) {
-	console.log("fire LEFT charged: " + chargeDuration);
 	this.leftChanneling = false;
+
+	var lightningEntity = new Entity("lightning");
+	var position = this.leftWing.baseTransform.position.copy();
+	position.y += 10;
+	position.x -= 16;
+
+	var target = position.copy();
+	var drawable = new VectorDrawable(this.scene.game.getImages().getLightning(), position, target, Lightning.lightningWidth);
+
+	var endPoint = this.dirForAngle(this.leftChannelAngle);
+	endPoint.multiply(50000);
+
+	lightningEntity.addComponent(new Transform());
+	lightningEntity.addComponent(drawable);
+	lightningEntity.addComponent(new Lightning());
+	lightningEntity.addComponent(new Weapon(10, false));
+	lightningEntity.addComponent(new LineBody(position, endPoint));
+
+	this.scene.addEntity(lightningEntity);
+
+	var velocity = this.dirForAngle(this.leftChannelAngle);
+	velocity.multiply(Lightning.lightningSpeed);
+
+	var endEntity = new Entity("lightningEnd");
+	endEntity.addComponent(new Transform(target), new Vector(Lightning.lightningWidth, Lightning.lightningWidth), null, 6);
+	endEntity.addComponent(new Movement(velocity));
+	endEntity.addComponent(new CircleBody());
+	this.scene.addEntity(endEntity);
 }
 
 Walter.prototype.aDown = function() {

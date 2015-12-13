@@ -193,13 +193,13 @@ GameScene.prototype.setupHelp = function() {
 		this.helpEntities.push(entity);
 	}
 
-	var yValue = 200;
+	var yValue = 240;
 
 	{
 		var entity = new Entity("help text 1.0");	
 		entity.addComponent(new Transform(new Vector(120, yValue)));
 
-		var textComponent = new TextDrawable("Cast a spell");
+		var textComponent = new TextDrawable("Cast Fireball");
 		textComponent.font = "20px Courier";
 		textComponent.fontColor = WalterColors.spellBlue;
 		textComponent.z = 11;
@@ -227,43 +227,43 @@ GameScene.prototype.setupHelp = function() {
 
 	yValue += 50;
 
-	{	
-		var entity = new Entity("help text 2.0");	
-		entity.addComponent(new Transform(new Vector(120, yValue)));
+	// {	
+	// 	var entity = new Entity("help text 2.0");	
+	// 	entity.addComponent(new Transform(new Vector(120, yValue)));
 
-		var textComponent = new TextDrawable("Switch spells");
-		textComponent.font = "20px Courier";
-		textComponent.fontColor = WalterColors.spellBlue;
-		textComponent.z = 11;
-		entity.addComponent(textComponent);
+	// 	var textComponent = new TextDrawable("Switch spells");
+	// 	textComponent.font = "20px Courier";
+	// 	textComponent.fontColor = WalterColors.spellBlue;
+	// 	textComponent.z = 11;
+	// 	entity.addComponent(textComponent);
 
-		this.addEntity(entity);
-		this.helpEntities.push(entity);
-	}
+	// 	this.addEntity(entity);
+	// 	this.helpEntities.push(entity);
+	// }
 
-	yValue += 30;
+	// yValue += 30;
 
-	{
-		var entity = new Entity("help text 2.1");	
-		entity.addComponent(new Transform(new Vector(120, yValue)));
+	// {
+	// 	var entity = new Entity("help text 2.1");	
+	// 	entity.addComponent(new Transform(new Vector(120, yValue)));
 
-		var textComponent = new TextDrawable("  + Press the 'A' and 'L' keys together.");
-		textComponent.font = "20px Courier";
-		textComponent.fontColor = WalterColors.owlLightBrown;
-		textComponent.z = 11;
-		entity.addComponent(textComponent);
+	// 	var textComponent = new TextDrawable("  + Press the 'A' and 'L' keys together.");
+	// 	textComponent.font = "20px Courier";
+	// 	textComponent.fontColor = WalterColors.owlLightBrown;
+	// 	textComponent.z = 11;
+	// 	entity.addComponent(textComponent);
 
-		this.addEntity(entity);
-		this.helpEntities.push(entity);
-	}
+	// 	this.addEntity(entity);
+	// 	this.helpEntities.push(entity);
+	// }
 
-	yValue += 50;
+	// yValue += 50;
 
 	{	
 		var entity = new Entity("help text 3.0");	
 		entity.addComponent(new Transform(new Vector(120, yValue)));
 
-		var textComponent = new TextDrawable("Channel a spell");
+		var textComponent = new TextDrawable("Channel Lightning");
 		textComponent.font = "20px Courier";
 		textComponent.fontColor = WalterColors.spellBlue;
 		textComponent.z = 11;

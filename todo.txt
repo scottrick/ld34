@@ -1,8 +1,16 @@
 MUST HAVE
 ----------------------
-update help text
+lightning sparks
+
+lose if something hits you?
+
+add a flying monster type
+	make thm a little bigger?
+
 levels
 make end game scene
+
+update help text
 
 
 
