@@ -11,6 +11,7 @@ function Images(document) {
 	this.walterPixel = document.getElementById("walterPixel");
 	this.leftWing = document.getElementById("leftWing");
 	this.rightWing = document.getElementById("rightWing");
+	this.wand = document.getElementById("wand");
 
 	this.flames = []; 
 	this.flames.push(document.getElementById("flame1"));
@@ -77,6 +78,10 @@ Images.prototype.getLeftWing = function() {
 
 Images.prototype.getRightWing = function() {
 	return this.rightWing;
+}
+
+Images.prototype.getWand = function() {
+	return this.wand;
 }
 
 Images.prototype.getLevelBackground = function() {

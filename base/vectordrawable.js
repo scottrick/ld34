@@ -33,29 +33,11 @@ VectorDrawable.prototype.draw = function(context) {
 	var yPart = (this.end.y - this.start.y) * (this.end.y - this.start.y);
 	var length = Math.sqrt(xPart + yPart);
 
-	var oppositeLength = Math.sqrt(yPart);
-	var adjacentLength = Math.sqrt(xPart);
-
-	var angle = Math.atan((this.end.y - this.start.y) / (this.end.x - this.start.x));
-	angle = Math.atan2(this.end.y - this.start.y, this.end.x - this.start.x);
-	// angle = Math.acos((this.end.x - this.start.x) / length);
-
-	console.log("angle: " + angle);
+	var angle = Math.atan2(this.end.y - this.start.y, this.end.x - this.start.x);
 
 	context.translate(this.start.x, this.start.y);
-	// context.rotate(Math.PI / 180 * -10);
 	context.rotate(angle);
 	context.scale(length, this.width);
 
-	console.log("drawing VectorDrawable");
 	context.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, -0.5, 1.0, 1.0);
-
-	// context.fillStyle = this.fillColor;
-	// context.strokeStyle = this.strokeColor;
-	// context.lineWidth = this.lineWidth;
-
-	// context.fillRect(this.rect.x, this.rect.y, this.rect.w, this.rect.h);
-	// context.strokeRect(this.rect.x, this.rect.y, this.rect.w, this.rect.h);
-
-	// context.fill();
 }

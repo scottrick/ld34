@@ -2,8 +2,19 @@
 	Simple 2 dimensional vector class.
 */
 function Vector(x, y) {
-	this.x = x;
-	this.y = y;
+	if (x != null) {
+		this.x = x;
+	}
+	else {
+		this.x = 0;
+	}
+
+	if (y != null) {
+		this.y = y;
+	}
+	else {
+		this.y = 0;
+	}
 }
 
 Vector.prototype.multiply = function(value) {

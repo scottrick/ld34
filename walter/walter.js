@@ -5,10 +5,10 @@ Walter.type = "walter";
 
 Walter.channelStartDuration = 0.2;
 
-Walter.fireSpeed = 500;
+Walter.fireSpeed = 480;
 Walter.fireballSize = 18;
 
-function Walter(rightWing, leftWing, scene) {
+function Walter(rightWing, leftWing, transform, scene) {
 	Component.call(this, Walter.type);
 
 	this.rightWing = rightWing;
@@ -18,6 +18,23 @@ function Walter(rightWing, leftWing, scene) {
 
 	this.rightDown = false;
 	this.rightDownDuration = 0;
+
+	this.rightChanneling = false;
+	this.rightChannelAngleStart = 0;
+	this.rightChannelAngleEnd = -80;
+	this.rightChannelAngle = this.rightChannelAngleStart;
+	this.rightChannelAngleUpSpeed = -150;
+	this.rightChannelAngleDownSpeed = 90;
+	this.rightChannelingTargetPos = new Vector();
+	this.rightChannelingTargetEntity = null;
+
+	var rightEntity = new Entity("right channel entity");
+	rightEntity.addComponent(new Transform());
+	var drawable = new VectorDrawable(scene.game.getImages().getWand(), transform.position, this.rightChannelingTargetPos, 12);
+	drawable.z = 3;
+	rightEntity.addComponent(drawable);
+	this.rightChannelingTargetEntity = rightEntity;
+	this.scene.addEntity(rightEntity);
 
 	this.leftDown = false;
 	this.leftDownDuration = 0;
@@ -50,7 +67,9 @@ Walter.prototype.fireRightNormal = function() {
 	var transform = new Transform(position, new Vector(Walter.fireballSize, Walter.fireballSize));
 	transform.z = 6;
 
-	var movement = new Movement(new Vector(Walter.fireSpeed, 0), null, (Math.random() - 0.5) * 1440);
+	var dir = this.dirForAngle(this.rightChannelAngle);
+	dir.multiply(Walter.fireSpeed);
+	var movement = new Movement(dir, null, (Math.random() - 0.5) * 1440);
 	var drawable = new ImageDrawable(this.scene.game.getImages().getFireball());
 
 	fireEntity.addComponent(transform);
@@ -63,8 +82,13 @@ Walter.prototype.fireRightNormal = function() {
 	this.scene.addEntity(fireEntity);
 }
 
+Walter.prototype.startChannelingRight = function() {
+	this.rightChanneling = true;
+}
+
 Walter.prototype.fireRightCharged = function(chargeDuration) {
 	console.log("fire RIGHT charged: " + chargeDuration);
+	this.rightChanneling = false;
 }
 
 Walter.prototype.fireLeftNormal = function() {
@@ -109,4 +133,12 @@ Walter.prototype.aUp = function() {
 
 	this.leftDown = false;
 	this.leftDownDuration = 0;
+}
+
+Walter.prototype.dirForAngle = function(angle) {
+	var dir = new Vector(
+		Math.cos(Math.PI / 180 * angle),
+		Math.sin(Math.PI / 180 * angle));
+
+	return dir;
 }

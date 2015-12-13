@@ -356,13 +356,14 @@ GameScene.prototype.setupBase = function() {
 
 	{
 		var entity = new Entity("Walter");	
-		entity.addComponent(new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth)));
+		var transform = new Transform(new Vector(400, 540 - walterHidth / 2), new Vector(walterWidth, walterHidth));
+		entity.addComponent(transform);
 
 		var imageDrawable = new ImageDrawable(this.game.getImages().getWalter());
 		imageDrawable.z = 5;
 		entity.addComponent(imageDrawable);
 
-		this.walter = new Walter(this.rightWing, this.leftWing, this);
+		this.walter = new Walter(this.rightWing, this.leftWing, transform, this);
 		entity.addComponent(this.walter);
 
 		this.addEntity(entity);
