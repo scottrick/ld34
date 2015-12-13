@@ -299,30 +299,6 @@ GameScene.prototype.setupHelp = function() {
 }
 
 GameScene.prototype.setupLevel = function() {
-	var sharedPos = new Vector(0, 0);
-
-	{
-		var entity = new Entity("test move");	
-		entity.addComponent(new Drawable());
-		entity.addComponent(new Transform(sharedPos, new Vector(20, 20), null, 7));
-		entity.addComponent(new Movement(new Vector(50, 50)));
-		this.addEntity(entity);
-	}
-
-	{
-		var entity = new Entity("test image");	
-		entity.addComponent(new VectorDrawable(this.game.getImages().getDefaultImage(), sharedPos, new Vector(400, 300)));
-		entity.addComponent(new Transform(null, null, null, 7));
-		this.addEntity(entity);
-	}
-
-	{
-		var entity = new Entity("test CENTER");	
-		entity.addComponent(new Drawable());
-		entity.addComponent(new Transform(new Vector(400, 300), new Vector(8, 8), null, 8));
-		this.addEntity(entity);
-	}
-
 	{
 		var entity = new Entity("monster spawner");	
 		entity.addComponent(new Transform(new Vector(-24, 516), new Vector(-48, 48), null, 6));
