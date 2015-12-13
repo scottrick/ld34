@@ -10,7 +10,12 @@ function GameScene(game, level, showHelp) {
     this.isHelpShowning = false;
     this.helpEntities = [];
 
+    this.progressWidth = 400;
+    this.progressHeight = 24;
+
     this.level = level;
+    this.level.scene = this;
+	this.levelIsComplete = false;
 
 	this.addSystem(new MovementSystem());
 	this.addSystem(new WalterSystem());
@@ -76,6 +81,14 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 			explosionTransform.scale.multiply(0.65);
 			entity.addComponent(explosionTransform);
 			this.addEntity(entity);
+
+			/* update level state and check for level completion */
+			this.level.monsterDestroyed(monsterEntity);
+			this.progressRectDrawable.rect.w = this.progressWidth * this.level.getProgress();
+
+			if (this.level.isComplete()) {
+				this.levelComplete();
+			}
 		}
 
 		if (weapon.shouldRemoveOnImpact) {
@@ -104,6 +117,10 @@ GameScene.prototype.handleKeyDown = function(key) {
 		return;
 	}
 
+	if (this.levelIsComplete) {
+		return;
+	}
+
 	if (key == 65) { // A
 		this.walter.aDown();
 	}
@@ -126,6 +143,10 @@ GameScene.prototype.handleKeyUp = function(key) {
 	}
 
 	if (this.isPaused()) {
+		return;
+	}
+
+	if (this.levelIsComplete) {
 		return;
 	}
 
@@ -156,6 +177,34 @@ GameScene.prototype.hideHelp = function() {
 		var entity = this.helpEntities[i];
 		entity.enabled = false;
 	}
+}
+
+GameScene.prototype.levelComplete = function() {
+	for (var i = 0; i < this.entities.length; i++) {
+		var entity = this.entities[i];
+
+		if (entity.components[Monster.type] != null) {
+			//is a monster
+			this.removeEntity(entity);
+
+			//explode it
+			var lightningExplosionEntity = new Entity("endgame explosion");
+			lightningExplosionEntity.addComponent(new Explosion(0, 2, "lightning"));
+			lightningExplosionEntity.addComponent(entity.components[Transform.type].copy());
+			this.addEntity(lightningExplosionEntity);
+
+			var fireExplosionEntity = new Entity("endgame explosion");
+			fireExplosionEntity.addComponent(new Explosion(0, 2, "fire"));
+			fireExplosionEntity.addComponent(entity.components[Transform.type].copy());
+			this.addEntity(fireExplosionEntity);
+		}
+		if (entity.components[Spawner.type] != null) {
+			//is a spawner
+			this.removeEntity(entity);
+		}
+	}
+
+	this.levelIsComplete = true;
 }
 
 GameScene.prototype.setupHelp = function() {
@@ -237,38 +286,6 @@ GameScene.prototype.setupHelp = function() {
 
 	yValue += 50;
 
-	// {	
-	// 	var entity = new Entity("help text 2.0");	
-	// 	entity.addComponent(new Transform(new Vector(120, yValue)));
-
-	// 	var textComponent = new TextDrawable("Switch spells");
-	// 	textComponent.font = "20px Courier";
-	// 	textComponent.fontColor = WalterColors.spellBlue;
-	// 	textComponent.z = 11;
-	// 	entity.addComponent(textComponent);
-
-	// 	this.addEntity(entity);
-	// 	this.helpEntities.push(entity);
-	// }
-
-	// yValue += 30;
-
-	// {
-	// 	var entity = new Entity("help text 2.1");	
-	// 	entity.addComponent(new Transform(new Vector(120, yValue)));
-
-	// 	var textComponent = new TextDrawable("  + Press the 'A' and 'L' keys together.");
-	// 	textComponent.font = "20px Courier";
-	// 	textComponent.fontColor = WalterColors.owlLightBrown;
-	// 	textComponent.z = 11;
-	// 	entity.addComponent(textComponent);
-
-	// 	this.addEntity(entity);
-	// 	this.helpEntities.push(entity);
-	// }
-
-	// yValue += 50;
-
 	{	
 		var entity = new Entity("help text 3.0");	
 		entity.addComponent(new Transform(new Vector(120, yValue)));
@@ -316,36 +333,7 @@ GameScene.prototype.setupHelp = function() {
 }
 
 GameScene.prototype.setupLevel = function() {
-	var groundSize = 48;
-	var airSize = 60;
-
-	{
-		var entity = new Entity("ground monster spawner");	
-		entity.addComponent(new Transform(new Vector(-24, 516), new Vector(-groundSize, groundSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(1, 0), 2, this.game.getImages().getMonster1()));
-		this.addEntity(entity);
-	}
-
-	{
-		var entity = new Entity("ground monster spawner");	
-		entity.addComponent(new Transform(new Vector(824, 516), new Vector(groundSize, groundSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(-1, 0), 2, this.game.getImages().getMonster1()));
-		this.addEntity(entity);
-	}
-
-	{
-		var entity = new Entity("air monster spawner");	
-		entity.addComponent(new Transform(new Vector(-24, 100), new Vector(-airSize, airSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(1, 0), 2, this.game.getImages().getMonster2()));
-		this.addEntity(entity);
-	}
-
-	{
-		var entity = new Entity("air monster spawner");	
-		entity.addComponent(new Transform(new Vector(824, 160), new Vector(airSize, airSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(-1, 0), 2, this.game.getImages().getMonster2()));
-		this.addEntity(entity);
-	}
+	this.level.setup(this);
 }
 
 GameScene.prototype.setupBase = function() {
@@ -404,11 +392,26 @@ GameScene.prototype.setupBase = function() {
 	}
 
 	{
-		var entity = new Entity("test fire");	
-		entity.addComponent(new Transform(new Vector(150, 540), new Vector(20, 20), null, 6));
-		entity.addComponent(new Fire(10));
-		// this.addEntity(entity);
+		var entity = new Entity("progress border");	
+		entity.addComponent(new Transform());
+		var rectDrawable = new RectDrawable(new Rect((800 - this.progressWidth) / 2, 12, this.progressWidth, this.progressHeight));
+		rectDrawable.alpha = 0.5;
+		rectDrawable.z = 15;
+		entity.addComponent(rectDrawable);
+		this.addEntity(entity);
 	}
+
+	{
+		var entity = new Entity("progress inside");	
+		entity.addComponent(new Transform());
+		this.progressRectDrawable = new RectDrawable(new Rect((800 - this.progressWidth) / 2, 12, this.progressWidth * this.level.getProgress(), this.progressHeight));
+		this.progressRectDrawable.alpha = 0.5;
+		this.progressRectDrawable.fillColor = "#0c0";
+		this.progressRectDrawable.z = 15;	
+		entity.addComponent(this.progressRectDrawable);
+		this.addEntity(entity);
+	}
+
 
 	{
 		var entity = new Entity("ground");	

@@ -7,14 +7,41 @@
 	A level has a name.
 	A level has description text!
 */
+
 var Level = function() {
+	this.scene = null;
+
 	this.name = "level name";
 	this.description = "description text";
 
 	this.progress = 0.0;
+
+	this.nextLevel = null;
 };
+
+Level.groundSize = 48;
+Level.airSize = 60;
 
 /* setup this level on the given scene */
 Level.prototype.setup = function(scene) {
-	console.log("NEED CUSTOM SETUP");
+
 };
+
+Level.prototype.monsterDestroyed = function(entity) {
+
+}
+
+Level.prototype.getProgress = function() {
+	if (this.progress > 1.0) {
+		return 1.0;
+	}
+	if (this.progress < 0.0) {
+		return 0.0;
+	}
+
+	return this.progress;
+}
+
+Level.prototype.isComplete = function() {
+	return this.getProgress() >= 1.0;
+}

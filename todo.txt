@@ -5,7 +5,8 @@ levels
 lose if something hits you?
 
 make end game scene
-
+	-> with fireworks?
+	
 music
 
 disable debug slow-mo / pause / new key
