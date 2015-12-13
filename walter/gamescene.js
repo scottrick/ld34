@@ -195,6 +195,10 @@ GameScene.prototype.handleKeyUp = function(key) {
 }
 
 GameScene.prototype.showHelp = function() {
+	if (this.isShowingVictory || this.isIntroShowning) {
+		return;
+	}
+
 	this.isHelpShowning = true;
 	this.paused = true;
 
@@ -220,6 +224,7 @@ GameScene.prototype.hideHelp = function() {
 
 GameScene.prototype.showIntro = function() {
 	this.isIntroShowning = true;
+	this.hasShownIntro = true;
 	this.paused = true;
 
 	for (var i = 0; i < this.levelIntroEntities.length; i++) {

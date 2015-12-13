@@ -29,20 +29,6 @@ Level1.prototype.setup = function(scene) {
 		entity.addComponent(new Spawner(new Vector(-1, 0), 1.2, scene.game.getImages().getMonster1()));
 		scene.addEntity(entity);
 	}
-
-	// {
-	// 	var entity = new Entity("air monster spawner");	
-	// 	entity.addComponent(new Transform(new Vector(-24, 100), new Vector(-Level.airSize, Level.airSize), null, 6));
-	// 	entity.addComponent(new Spawner(new Vector(1, 0), 2, scene.game.getImages().getMonster2()));
-	// 	scene.addEntity(entity);
-	// }
-
-	// {
-	// 	var entity = new Entity("air monster spawner");	
-	// 	entity.addComponent(new Transform(new Vector(824, 160), new Vector(Level.airSize, Level.airSize), null, 6));
-	// 	entity.addComponent(new Spawner(new Vector(-1, 0), 2, scene.game.getImages().getMonster2()));
-	// 	scene.addEntity(entity);
-	// }
 }
 
 Level1.prototype.monsterDestroyed = function(entity) {
