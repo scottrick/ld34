@@ -24,12 +24,12 @@ function Explosion(delay, intensity) {
 }
 
 Explosion.prototype.explode = function(transform, scene) {
-	for (var i = 0; i < 8 * this.intensity; i++) {
+	for (var i = 0; i < 6 * this.intensity; i++) {
 		var flameImage = scene.game.getImages().getNextFlame();
 		this.emit(scene, transform, flameImage, 1.0);
 	}
 
-	for (var i = 0; i < 5 * this.intensity; i++) {
+	for (var i = 0; i < 4 * this.intensity; i++) {
 		var smokeImage = scene.game.getImages().getNextSmoke();
 		this.emit(scene, transform, smokeImage, 0.7);
 	}
