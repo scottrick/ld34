@@ -19,6 +19,7 @@ function Wing(baseTransform) {
 
 Wing.prototype.wave = function () {
 	this.isWaving = true;
+	this.isRetracting = false;
 }
 
 Wing.prototype.channel = function() {

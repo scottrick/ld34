@@ -13,8 +13,6 @@ WingSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 	var wing = entity.components[Wing.type];
 
 	if (wing.isWaving) {
-		var newPosition = wing.baseTransform.position.copy();
-
 		wing.currentDuration += deltaTime;
 		if (wing.currentDuration >= wing.waveDuration) {
 			wing.currentDuration = wing.waveDuration;
@@ -22,13 +20,9 @@ WingSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 			wing.isRetracting = true;
 		}
 
-		newPosition.x += wing.currentDuration / wing.waveDuration * wing.waveDeltaX;
-
-		transform.position = newPosition;
+		transform.position.x = wing.baseTransform.position.x + wing.currentDuration / wing.waveDuration * wing.waveDeltaX; 
 	}
 	else if (wing.isRetracting) {
-		var newPosition = wing.baseTransform.position.copy();
-
 		wing.currentDuration -= deltaTime;
 		if (wing.currentDuration <= 0) {
 			wing.currentDuration = 0;
@@ -36,8 +30,6 @@ WingSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 			wing.isRetracting = false;
 		}
 
-		newPosition.x += wing.currentDuration / wing.waveDuration * wing.waveDeltaX;
-
-		transform.position = newPosition;
+		transform.position.x = wing.baseTransform.position.x + wing.currentDuration / wing.waveDuration * wing.waveDeltaX; 
 	}
 }
