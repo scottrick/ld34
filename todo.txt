@@ -12,6 +12,7 @@ make end game scene
 	-> with fireworks?
 
 music
+	don't repeat title/victory music
 
 disable debug slow-mo / pause / new key
 	
@@ -26,3 +27,4 @@ rare burning monsters, huge eexplosions!
 	-> boss?
 
 if you release both charges at once, at full, then big explosion?
+

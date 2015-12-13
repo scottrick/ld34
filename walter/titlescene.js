@@ -127,3 +127,7 @@ TitleScene.prototype.setup = function() {
 		this.addEntity(entity);
 	}
 }
+
+TitleScene.prototype.getMusic = function() {
+	return theSounds.getTitleTrack();
+}

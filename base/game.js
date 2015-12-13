@@ -109,6 +109,8 @@ Game.update = function() {
 		/* we have a new scene, so change scenes! */
 		this.scene = this.nextScene;
 		this.nextScene = null;
+
+		this.setMusic(this.scene.getMusic());
 	}
 
 	var deltaTime = 1 / Game.updatesPerSecond;
@@ -153,8 +155,7 @@ Game.handleKeyUp = function(key) {
 }
 
 Game.reset = function() {
-	this.scene = null;
-	this.scene = new TitleScene(this);
+	this.setNextScene(new TitleScene(this));
 }
 
 Game.setMusic = function(music) {
@@ -186,7 +187,10 @@ Game.setMusic = function(music) {
 	Game.currentMusic.addEventListener('ended', function() {
 		if (Game.currentMusic == this) {
 		    this.currentTime = 0;
-		    this.play();
+
+		    if (this.scene.shouldMusicRepeat()) {
+			    this.play();
+			}
 		}
 	}, false);
 

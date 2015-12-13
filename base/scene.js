@@ -157,3 +157,7 @@ Scene.prototype.getUpdateSpeed = function() {
 Scene.prototype.getMusic = function() {
 	return theSounds.getGameTrack();
 }
+
+Scene.prototype.shouldMusicRepeat = function() {
+	return false;
+}

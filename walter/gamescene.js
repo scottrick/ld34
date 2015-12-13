@@ -689,3 +689,11 @@ GameScene.prototype.setupBase = function() {
 		this.addEntity(entity);
 	}
 }
+
+Scene.prototype.getMusic = function() {
+	return theSounds.getGameTrack();
+}
+
+Scene.prototype.shouldMusicRepeat = function() {
+	return true;
+}
