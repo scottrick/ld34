@@ -3,7 +3,7 @@ Weapon.prototype.constructor = Weapon;
 
 Weapon.type = "weapon";
 
-function Weapon(damage, shouldRemove) {
+function Weapon(damage, weaponType, shouldRemove) {
 	Component.call(this, Weapon.type);
 
 	if (damage != null) {
@@ -12,6 +12,8 @@ function Weapon(damage, shouldRemove) {
 	else {
 		this.damage = 1;
 	}
+
+	this.weaponType = weaponType;
 
 	if (shouldRemove != null) {
 		this.shouldRemoveOnImpact = shouldRemove;

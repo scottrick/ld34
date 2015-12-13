@@ -3,8 +3,9 @@ Lightning.prototype.constructor = Lightning;
 
 Lightning.type = "lightning";
 
-Lightning.lightningSpeed = 10000;
-Lightning.lightningWidth = 36;
+Lightning.lightningBaseSpeed = 8000;
+Lightning.lightningVariableSpeed = 4000;
+Lightning.lightningWidth = 30;
 
 function Lightning() {
 	Component.call(this, Lightning.type);

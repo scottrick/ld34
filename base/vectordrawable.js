@@ -39,5 +39,5 @@ VectorDrawable.prototype.draw = function(context) {
 	context.rotate(angle);
 	context.scale(length, this.width);
 
-	context.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, -0.5, 1.0, 1.0);
+	context.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0.0, -0.5, 1.0, 1.0);
 }

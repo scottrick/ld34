@@ -18,6 +18,7 @@ function GameScene(game, level, showHelp) {
 	this.addSystem(new FireSystem());
 	this.addSystem(new FlameSystem());
 	this.addSystem(new LightningSystem());
+	this.addSystem(new SparkSystem());
 	this.addSystem(new ExplosionSystem());
 	this.addSystem(new CollisionSystem(this));
 	this.addSystem(new MonsterSystem());
@@ -71,7 +72,9 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 			/* add a bigger explosion for the monster death */
 			var entity = new Entity("explosion");
 			entity.addComponent(new Explosion(0, 4));
-			entity.addComponent(monsterEntity.components[Transform.type].copy());
+			var explosionTransform = monsterEntity.components[Transform.type].copy();
+			explosionTransform.scale.multiply(0.65);
+			entity.addComponent(explosionTransform);
 			this.addEntity(entity);
 		}
 
@@ -79,10 +82,17 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 			this.removeEntity(weaponEntity);
 		}
 
-		/* add little explosion for the weapon dissipation */
+		/* add little something for the weapon dissipation */
 		var entity = new Entity("explosion");
-		entity.addComponent(new Explosion(0, 2));
-		entity.addComponent(weaponEntity.components[Transform.type].copy());
+		entity.addComponent(new Explosion(0, 2, weapon.weaponType));
+
+		if (weapon.weaponType == "lightning") {
+			entity.addComponent(monsterEntity.components[Transform.type].copy());
+		}
+		else {
+			entity.addComponent(weaponEntity.components[Transform.type].copy());
+		}
+
 		this.addEntity(entity);
 	}
 }

@@ -92,7 +92,7 @@ Walter.prototype.fireRightNormal = function() {
 	fireEntity.addComponent(drawable);
 	fireEntity.addComponent(new CircleBody());
 	fireEntity.addComponent(new Fire());
-	fireEntity.addComponent(new Weapon());
+	fireEntity.addComponent(new Weapon(1, "fire", true));
 
 	this.scene.addEntity(fireEntity);
 }
@@ -104,33 +104,34 @@ Walter.prototype.startChannelingRight = function() {
 Walter.prototype.fireRightCharged = function(chargeDuration) {
 	this.rightChanneling = false;
 
-	var lightningEntity = new Entity("lightning");
-	var position = this.rightWing.baseTransform.position.copy();
-	position.y += 10;
-	position.x += 16;
+	for (var i = 0; i < 2; i++) {
+		var lightningEntity = new Entity("lightning");
+		var position = this.rightWing.baseTransform.position.copy();
+		position.y += 10;
+		position.x += 16;
 
-	var target = position.copy();
-	var drawable = new VectorDrawable(this.scene.game.getImages().getLightning(), position, target, Lightning.lightningWidth);
+		var target = position.copy();
+		var drawable = new VectorDrawable(this.scene.game.getImages().getLightning(), position, target, Lightning.lightningWidth);
 
-	var endPoint = this.dirForAngle(this.rightChannelAngle);
-	endPoint.multiply(50000);
+		var endPoint = this.dirForAngle(this.rightChannelAngle);
+		endPoint.multiply(50000);
 
-	lightningEntity.addComponent(new Transform());
-	lightningEntity.addComponent(drawable);
-	lightningEntity.addComponent(new Lightning());
-	lightningEntity.addComponent(new Weapon(10, false));
-	lightningEntity.addComponent(new LineBody(position, endPoint));
+		lightningEntity.addComponent(new Transform());
+		lightningEntity.addComponent(drawable);
+		lightningEntity.addComponent(new Lightning());
+		lightningEntity.addComponent(new Weapon(4, "lightning", false));
+		lightningEntity.addComponent(new LineBody(position, endPoint));
 
-	this.scene.addEntity(lightningEntity);
+		this.scene.addEntity(lightningEntity);
 
-	var velocity = this.dirForAngle(this.rightChannelAngle);
-	velocity.multiply(Lightning.lightningSpeed);
+		var velocity = this.dirForAngle(this.rightChannelAngle - i * this.randomAngleOffset());
+		velocity.multiply(this.randomLightningSpeed());
 
-	var endEntity = new Entity("lightningEnd");
-	endEntity.addComponent(new Transform(target), new Vector(Lightning.lightningWidth, Lightning.lightningWidth), null, 6);
-	endEntity.addComponent(new Movement(velocity));
-	endEntity.addComponent(new CircleBody());
-	this.scene.addEntity(endEntity);
+		var endEntity = new Entity("lightningEnd");
+		endEntity.addComponent(new Transform(target));
+		endEntity.addComponent(new Movement(velocity));
+		this.scene.addEntity(endEntity);
+	}
 }
 
 Walter.prototype.fireLeftNormal = function() {
@@ -151,7 +152,7 @@ Walter.prototype.fireLeftNormal = function() {
 	fireEntity.addComponent(movement);
 	fireEntity.addComponent(drawable);
 	fireEntity.addComponent(new CircleBody());
-	fireEntity.addComponent(new Fire());
+	fireEntity.addComponent(new Fire(1, "fire", true));
 	fireEntity.addComponent(new Weapon());
 
 	this.scene.addEntity(fireEntity);
@@ -164,33 +165,34 @@ Walter.prototype.startChannelingLeft = function() {
 Walter.prototype.fireLeftCharged = function(chargeDuration) {
 	this.leftChanneling = false;
 
-	var lightningEntity = new Entity("lightning");
-	var position = this.leftWing.baseTransform.position.copy();
-	position.y += 10;
-	position.x -= 16;
+	for (var i = 0; i < 2; i++) {
+		var lightningEntity = new Entity("lightning");
+		var position = this.leftWing.baseTransform.position.copy();
+		position.y += 10;
+		position.x -= 16;
 
-	var target = position.copy();
-	var drawable = new VectorDrawable(this.scene.game.getImages().getLightning(), position, target, Lightning.lightningWidth);
+		var target = position.copy();
+		var drawable = new VectorDrawable(this.scene.game.getImages().getLightning(), position, target, Lightning.lightningWidth);
 
-	var endPoint = this.dirForAngle(this.leftChannelAngle);
-	endPoint.multiply(50000);
+		var endPoint = this.dirForAngle(this.leftChannelAngle);
+		endPoint.multiply(50000);
 
-	lightningEntity.addComponent(new Transform());
-	lightningEntity.addComponent(drawable);
-	lightningEntity.addComponent(new Lightning());
-	lightningEntity.addComponent(new Weapon(10, false));
-	lightningEntity.addComponent(new LineBody(position, endPoint));
+		lightningEntity.addComponent(new Transform());
+		lightningEntity.addComponent(drawable);
+		lightningEntity.addComponent(new Lightning());
+		lightningEntity.addComponent(new Weapon(4, "lightning", false));
+		lightningEntity.addComponent(new LineBody(position, endPoint));
 
-	this.scene.addEntity(lightningEntity);
+		this.scene.addEntity(lightningEntity);
 
-	var velocity = this.dirForAngle(this.leftChannelAngle);
-	velocity.multiply(Lightning.lightningSpeed);
+		var velocity = this.dirForAngle(this.leftChannelAngle + i * this.randomAngleOffset());
+		velocity.multiply(this.randomLightningSpeed());
 
-	var endEntity = new Entity("lightningEnd");
-	endEntity.addComponent(new Transform(target), new Vector(Lightning.lightningWidth, Lightning.lightningWidth), null, 6);
-	endEntity.addComponent(new Movement(velocity));
-	endEntity.addComponent(new CircleBody());
-	this.scene.addEntity(endEntity);
+		var endEntity = new Entity("lightningEnd");
+		endEntity.addComponent(new Transform(target));
+		endEntity.addComponent(new Movement(velocity));
+		this.scene.addEntity(endEntity);
+	}
 }
 
 Walter.prototype.aDown = function() {
@@ -209,6 +211,14 @@ Walter.prototype.aUp = function() {
 
 	this.leftDown = false;
 	this.leftDownDuration = 0;
+}
+
+Walter.prototype.randomAngleOffset = function() {
+	return 3 + Math.random() * 6;
+}
+
+Walter.prototype.randomLightningSpeed = function() {
+	return Lightning.lightningBaseSpeed + Math.random() * Lightning.lightningVariableSpeed;
 }
 
 Walter.prototype.dirForAngle = function(angle) {

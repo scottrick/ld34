@@ -30,6 +30,7 @@ function Images(document) {
 	this.monster1.push(document.getElementById("monster1_1"));
 	this.monster1.push(document.getElementById("monster1_2"));
 
+	this.spark = document.getElementById("spark");
 	this.lightning = document.getElementById("lightning");
 	this.fireball = document.getElementById("fireball");
 }
@@ -52,6 +53,10 @@ Images.prototype.getNextSmoke = function() {
 
 Images.prototype.getFireball = function() {
 	return this.fireball;
+};
+
+Images.prototype.getSpark = function() {
+	return this.spark;
 };
 
 Images.prototype.getLightning = function() {
