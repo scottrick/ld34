@@ -690,10 +690,10 @@ GameScene.prototype.setupBase = function() {
 	}
 }
 
-Scene.prototype.getMusic = function() {
+GameScene.prototype.getMusic = function() {
 	return theSounds.getGameTrack();
 }
 
-Scene.prototype.shouldMusicRepeat = function() {
+GameScene.prototype.shouldMusicRepeat = function() {
 	return true;
 }

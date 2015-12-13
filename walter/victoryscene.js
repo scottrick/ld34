@@ -118,3 +118,8 @@ VictoryScene.prototype.setup = function() {
 	// 	this.addEntity(entity);
 	// }
 }
+
+VictoryScene.prototype.getMusic = function() {
+	return theSounds.getTitleTrack();
+}
+
