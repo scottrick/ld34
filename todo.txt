@@ -1,6 +1,8 @@
 MUST HAVE
 ----------------------
 levels
+	- spawnning monsters dropping in the sky
+	-> add monster gravity to MonsterSystem
 
 lose if something hits you?
 

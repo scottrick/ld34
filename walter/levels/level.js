@@ -18,6 +18,10 @@ var Level = function() {
 
 	this.progress = 0.0;
 
+	/* defaults */
+	this.numberDestroyed = 0;
+	this.numberToFinish = 20;
+
 	this.nextLevel = null;
 };
 
@@ -30,7 +34,9 @@ Level.prototype.setup = function(scene) {
 };
 
 Level.prototype.monsterDestroyed = function(entity) {
+	this.numberDestroyed++;
 
+	this.progress = this.numberDestroyed / this.numberToFinish;
 }
 
 Level.prototype.getProgress = function() {

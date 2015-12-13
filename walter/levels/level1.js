@@ -30,9 +30,3 @@ Level1.prototype.setup = function(scene) {
 		scene.addEntity(entity);
 	}
 }
-
-Level1.prototype.monsterDestroyed = function(entity) {
-	this.numberDestroyed++;
-
-	this.progress = this.numberDestroyed / this.numberToFinish;
-}
