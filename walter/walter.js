@@ -58,6 +58,7 @@ Walter.prototype.fireRightNormal = function() {
 	fireEntity.addComponent(drawable);
 	fireEntity.addComponent(new CircleBody());
 	fireEntity.addComponent(new Fire());
+	fireEntity.addComponent(new Weapon());
 
 	this.scene.addEntity(fireEntity);
 }
@@ -83,6 +84,7 @@ Walter.prototype.fireLeftNormal = function() {
 	fireEntity.addComponent(drawable);
 	fireEntity.addComponent(new CircleBody());
 	fireEntity.addComponent(new Fire());
+	fireEntity.addComponent(new Weapon());
 
 	this.scene.addEntity(fireEntity);
 }

@@ -24,7 +24,15 @@ function Images(document) {
 	this.smokes.push(document.getElementById("smoke3"));
 	this.smokeIndex = 0;
 
+	this.monster1 = []; 
+	this.monster1.push(document.getElementById("monster1_1"));
+	this.monster1.push(document.getElementById("monster1_2"));
+
 	this.fireball = document.getElementById("fireball");
+}
+
+Images.prototype.getMonster1 = function() {
+	return this.monster1;
 }
 
 Images.prototype.getNextFlame = function() {

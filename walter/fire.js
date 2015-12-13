@@ -39,7 +39,7 @@ Fire.prototype.flame = function(scene, transform) {
 
 Fire.prototype.smoke = function(scene, transform) {
 	var smokeImage = scene.game.getImages().getNextSmoke();
-	this.emit(scene, transform, smokeImage, 0.5);
+	this.emit(scene, transform, smokeImage, 0.7);
 	this.randomTimeToSmoke();
 }
 

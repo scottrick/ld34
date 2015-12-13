@@ -17,7 +17,10 @@ function GameScene(game, level, showHelp) {
 	this.addSystem(new WingSystem());
 	this.addSystem(new FireSystem());
 	this.addSystem(new FlameSystem());
+	this.addSystem(new ExplosionSystem());
 	this.addSystem(new CollisionSystem(this));
+	this.addSystem(new MonsterSystem());
+	this.addSystem(new MonsterSpawnSystem());
 	this.addSystem(new BoundarySystem(new Rect(-50, -50, 900, 700)));
 
 	this.setupHelp();
@@ -33,8 +36,52 @@ function GameScene(game, level, showHelp) {
 }
 
 GameScene.prototype.handleCollisionEvent = function(event) {
-	//event.entity1
-	//event.entity2
+	var entity1 = event.entity1;
+	var entity2 = event.entity2;
+
+	var monster = null;
+	var weapon = null;
+	var monsterEntity = null;
+	var weaponEntity = null;
+
+	if (entity1.components[Monster.type] != null) {
+		monster = entity1.components[Monster.type];
+		monsterEntity = entity1;
+	}
+	if (entity2.components[Monster.type] != null) {
+		monster = entity2.components[Monster.type];
+		monsterEntity = entity2;
+	}
+
+	if (entity1.components[Weapon.type] != null) {
+		weapon = entity1.components[Weapon.type];
+		weaponEntity = entity1;
+	}
+	if (entity2.components[Weapon.type] != null) {
+		weapon = entity2.components[Weapon.type];
+		weaponEntity = entity2;
+	}
+
+	if (monster != null && weapon != null) {
+		monster.health -= weapon.damage;
+		if (monster.health <= 0) {
+			this.removeEntity(monsterEntity);
+
+			/* add a bigger explosion for the monster death */
+			var entity = new Entity("explosion");
+			entity.addComponent(new Explosion(0, 4));
+			entity.addComponent(weaponEntity.components[Transform.type].copy());
+			this.addEntity(entity);
+		}
+
+		this.removeEntity(weaponEntity);
+
+		/* add little explosion for the weapon dissipation */
+		var entity = new Entity("explosion");
+		entity.addComponent(new Explosion(0, 2));
+		entity.addComponent(weaponEntity.components[Transform.type].copy());
+		this.addEntity(entity);
+	}
 }
 
 GameScene.prototype.handleKeyDown = function(key) {
@@ -252,7 +299,19 @@ GameScene.prototype.setupHelp = function() {
 }
 
 GameScene.prototype.setupLevel = function() {
+	{
+		var entity = new Entity("monster spawner");	
+		entity.addComponent(new Transform(new Vector(-24, 516), new Vector(-48, 48), null, 6));
+		entity.addComponent(new Spawner(new Vector(1, 0), 2));
+		this.addEntity(entity);
+	}
 
+	{
+		var entity = new Entity("monster spawner");	
+		entity.addComponent(new Transform(new Vector(824, 516), new Vector(48, 48), null, 6));
+		entity.addComponent(new Spawner(new Vector(-1, 0), 2));
+		this.addEntity(entity);
+	}
 }
 
 GameScene.prototype.setupBase = function() {
@@ -310,7 +369,7 @@ GameScene.prototype.setupBase = function() {
 	}
 
 	{
-		var entity = new Entity("test");	
+		var entity = new Entity("test fire");	
 		entity.addComponent(new Transform(new Vector(150, 540), new Vector(20, 20), null, 6));
 		entity.addComponent(new Fire(10));
 		// this.addEntity(entity);
