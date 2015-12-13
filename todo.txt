@@ -1,19 +1,20 @@
 MUST HAVE
 ----------------------
-lose if something hits you?
-
 levels
-	-> boss?
+
+lose if something hits you?
 
 make end game scene
 
-update help text
-
-rare burning monsters, huge eexplosions!
+music
 
 
 
 
 EXTRA
 ----------------------
+rare burning monsters, huge eexplosions!
+
+	-> boss?
+
 if you release both charges at once, at full, then big explosion?

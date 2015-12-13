@@ -4,6 +4,8 @@ TitleScene.prototype.constructor = TitleScene;
 function TitleScene(game) {
 	Scene.call(this, game);
 
+	Game.fpsDisplayEnabled = false;
+
 	this.dumpDelay = 1;
     this.slowMotionSpeed = 0.05;
 
