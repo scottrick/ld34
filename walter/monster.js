@@ -6,5 +6,5 @@ Monster.type = "monster";
 function Monster() {
 	Component.call(this, Monster.type);
 
-	this.health = 3;
+	this.health = 2;
 }

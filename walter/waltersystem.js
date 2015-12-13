@@ -12,7 +12,8 @@ WalterSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 	var walter = entity.components[Walter.type];
 	var transform = entity.components[Transform.type];
 
-	/* update our right down state variables */
+	/*********************************************/
+	/* update our RIGHT side */
 	if (walter.rightDown) {
 		walter.rightDownDuration += deltaTime;
 
@@ -43,11 +44,35 @@ WalterSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 	walter.rightChannelingTargetPos.x = transform.position.x + dir.x * 48;
 	walter.rightChannelingTargetPos.y = transform.position.y + dir.y * 48;
 
+	/*********************************************/
+	/* update our LEFT side */
 	if (walter.leftDown) {
 		walter.leftDownDuration += deltaTime;
 
-		if (walter.leftDownDuration >= Walter.channelStartDuration) {
+		if (walter.leftChanneling) {
+			//going up
+			walter.leftChannelAngle += walter.leftChannelAngleUpSpeed * deltaTime;
+
+			if (walter.leftChannelAngle >= walter.leftChannelAngleEnd) {
+				walter.leftChannelAngle = walter.leftChannelAngleEnd;
+			}
+		}
+		
+		if (!walter.leftChanneling && walter.leftDownDuration >= Walter.channelStartDuration) {
 			/* start channeling */
+			walter.startChannelingLeft(entity);
 		}
 	}
+	else {
+		//falling down
+		walter.leftChannelAngle += walter.leftChannelAngleDownSpeed * deltaTime;
+
+		if (walter.leftChannelAngle <= walter.leftChannelAngleStart) {
+			walter.leftChannelAngle = walter.leftChannelAngleStart;
+		}
+	}
+
+	var dir = walter.dirForAngle(walter.leftChannelAngle);
+	walter.leftChannelingTargetPos.x = transform.position.x + dir.x * 48;
+	walter.leftChannelingTargetPos.y = transform.position.y + dir.y * 48;
 }

@@ -87,6 +87,10 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 GameScene.prototype.handleKeyDown = function(key) {
 	Scene.prototype.handleKeyDown.call(this, key);
 
+	if (this.isPaused()) {
+		return;
+	}
+
 	if (key == 65) { // A
 		this.walter.aDown();
 	}

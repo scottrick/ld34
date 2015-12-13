@@ -26,18 +26,31 @@ function Walter(rightWing, leftWing, transform, scene) {
 	this.rightChannelAngleUpSpeed = -150;
 	this.rightChannelAngleDownSpeed = 90;
 	this.rightChannelingTargetPos = new Vector();
-	this.rightChannelingTargetEntity = null;
 
 	var rightEntity = new Entity("right channel entity");
 	rightEntity.addComponent(new Transform());
 	var drawable = new VectorDrawable(scene.game.getImages().getWand(), transform.position, this.rightChannelingTargetPos, 12);
 	drawable.z = 3;
 	rightEntity.addComponent(drawable);
-	this.rightChannelingTargetEntity = rightEntity;
 	this.scene.addEntity(rightEntity);
 
 	this.leftDown = false;
 	this.leftDownDuration = 0;
+
+	this.leftChanneling = false;
+	this.leftChannelAngleStart = 180;
+	this.leftChannelAngleEnd = 260;
+	this.leftChannelAngle = this.leftChannelAngleStart;
+	this.leftChannelAngleUpSpeed = 150;
+	this.leftChannelAngleDownSpeed = -90;
+	this.leftChannelingTargetPos = new Vector();
+
+	var leftEntity = new Entity("left channel entity");
+	leftEntity.addComponent(new Transform());
+	var drawable = new VectorDrawable(scene.game.getImages().getWand(), transform.position, this.leftChannelingTargetPos, 12);
+	drawable.z = 3;
+	leftEntity.addComponent(drawable);
+	this.scene.addEntity(leftEntity);
 }
 
 Walter.prototype.lDown = function() {
@@ -93,14 +106,16 @@ Walter.prototype.fireRightCharged = function(chargeDuration) {
 
 Walter.prototype.fireLeftNormal = function() {
 	var fireEntity = new Entity("fireball");
-	var position = this.rightWing.baseTransform.position.copy();
+	var position = this.leftWing.baseTransform.position.copy();
 	position.y += 10;
 	position.x -= 16;
 
 	var transform = new Transform(position, new Vector(Walter.fireballSize, Walter.fireballSize));
 	transform.z = 6;
 
-	var movement = new Movement(new Vector(-Walter.fireSpeed, 0), null, (Math.random() - 0.5) * 1440);
+	var dir = this.dirForAngle(this.leftChannelAngle);
+	dir.multiply(Walter.fireSpeed);
+	var movement = new Movement(dir, null, (Math.random() - 0.5) * 1440);
 	var drawable = new ImageDrawable(this.scene.game.getImages().getFireball());
 
 	fireEntity.addComponent(transform);
@@ -113,8 +128,13 @@ Walter.prototype.fireLeftNormal = function() {
 	this.scene.addEntity(fireEntity);
 }
 
+Walter.prototype.startChannelingLeft = function() {
+	this.leftChanneling = true;
+}
+
 Walter.prototype.fireLeftCharged = function(chargeDuration) {
 	console.log("fire LEFT charged: " + chargeDuration);
+	this.leftChanneling = false;
 }
 
 Walter.prototype.aDown = function() {
