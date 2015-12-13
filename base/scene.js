@@ -37,10 +37,12 @@ Scene.prototype.update = function(deltaTime) {
 		this.updateSystems(sceneDeltaTime);
 	}
 
-	this.dumpTimer += deltaTime;
-	if (this.dumpTimer >= this.dumpDelay) {
-		this.dumpTimer -= this.dumpDelay;
-		console.log(this.toString());
+	if (Game.DEBUG) {
+		this.dumpTimer += deltaTime;
+		if (this.dumpTimer >= this.dumpDelay) {
+			this.dumpTimer -= this.dumpDelay;
+			console.log(this.toString());
+		}
 	}
 };
 

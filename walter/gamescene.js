@@ -14,8 +14,11 @@ function GameScene(game, level) {
     this.isIntroShowning = false;
     this.levelIntroEntities = [];
 
+    this.isShowingVictory = false;
+    this.victoryEntities = [];
+
     this.hasStarted = false;
-    this.timeToStart = 0.5;
+    this.timeToStart = 0.3;
 
     this.progressWidth = 400;
     this.progressHeight = 24;
@@ -36,7 +39,7 @@ function GameScene(game, level) {
 	this.addSystem(new MonsterSystem());
 	this.addSystem(new MonsterSpawnSystem());
 	this.addSystem(new GameSystem());
-	this.addSystem(new BoundarySystem(new Rect(-50, -50, 900, 700)));
+	this.addSystem(new BoundarySystem(new Rect(-100, -100, 1000, 800)));
 
 	var gameEntity = new Entity("game entity");
 	gameEntity.addComponent(new SceneComponent(this));
@@ -44,7 +47,10 @@ function GameScene(game, level) {
 
 	this.setupHelp();
 	this.setupIntro();
+	this.setupVictory();
     this.setupBase();
+
+    this.hideVictory();
 
 	if (this.level.showHelp) {
 		this.hideIntro();
@@ -160,6 +166,9 @@ GameScene.prototype.handleKeyUp = function(key) {
 		if (this.isIntroShowning) {
 			this.hideIntro();
 		}
+		else if (this.isShowingVictory) {
+			this.nextLevel();
+		}
 	}
 
 	if (this.isPaused()) {
@@ -229,6 +238,24 @@ GameScene.prototype.hideIntro = function() {
 	}
 }
 
+GameScene.prototype.showVictory = function() {
+	this.isShowingVictory = true;
+
+	for (var i = 0; i < this.victoryEntities.length; i++) {
+		var entity = this.victoryEntities[i];
+		entity.enabled = true;
+	}
+}
+
+GameScene.prototype.hideVictory = function() {
+	this.isIntroShowning = false;
+
+	for (var i = 0; i < this.victoryEntities.length; i++) {
+		var entity = this.victoryEntities[i];
+		entity.enabled = false;
+	}
+}
+
 GameScene.prototype.start = function() {
 	if (this.hasStarted) {
 		return;
@@ -257,6 +284,7 @@ GameScene.prototype.levelComplete = function() {
 			fireExplosionEntity.addComponent(entity.components[Transform.type].copy());
 			this.addEntity(fireExplosionEntity);
 		}
+
 		if (entity.components[Spawner.type] != null) {
 			//is a spawner
 			this.removeEntity(entity);
@@ -264,6 +292,16 @@ GameScene.prototype.levelComplete = function() {
 	}
 
 	this.levelIsComplete = true;
+	this.showVictory();
+}
+
+GameScene.prototype.nextLevel = function() {
+	if (this.level.nextLevel != null) {
+		this.game.setNextScene(new GameScene(this.game, this.level.nextLevel));
+	}
+	else {
+		this.game.setNextScene(new VictoryScene(this.game));
+	}
 }
 
 GameScene.prototype.setupHelp = function() {
@@ -470,6 +508,84 @@ GameScene.prototype.setupIntro = function() {
 
 		this.addEntity(entity);
 		this.levelIntroEntities.push(entity);
+	}
+}
+
+GameScene.prototype.setupVictory = function() {
+	{
+		var entity = new Entity("victory full background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(0, 0, 800, 600));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.victoryGreen;
+		rectDrawable.alpha = 0.35;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.victoryEntities.push(entity);
+	}
+	{
+		var entity = new Entity("victory popup background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(100, 100, 600, 400));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.victoryGreen;
+		rectDrawable.alpha = 0.6;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.victoryEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("victory text header");	
+		entity.addComponent(new Transform(new Vector(400, 140)));
+
+		var textComponent = new TextDrawable(this.level.name);
+		textComponent.font = "28px Courier";
+		textComponent.fontColor = WalterColors.victoryGreen;
+		textComponent.alignment = "center"
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.victoryEntities.push(entity);
+	}
+
+	var yValue = 320;
+
+	{
+		var entity = new Entity("victory text 1.0");	
+		entity.addComponent(new Transform(new Vector(400, yValue)));
+
+		var textComponent = new TextDrawable("Victory!");
+		textComponent.font = "92px Courier";
+		textComponent.fontColor = WalterColors.victoryGreen;
+		textComponent.alignment = "center"
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.victoryEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("victory text footer");	
+		entity.addComponent(new Transform(new Vector(400, 480)));
+
+		var textComponent = new TextDrawable("Press [spacebar]");
+		textComponent.font = "20px Courier";
+		textComponent.fontColor = WalterColors.victoryGreen;
+		textComponent.z = 11;
+		textComponent.alignment = "center"
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.victoryEntities.push(entity);
 	}
 }
 

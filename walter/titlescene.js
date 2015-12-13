@@ -99,7 +99,7 @@ TitleScene.prototype.setup = function() {
 	{
 		var entity = new Entity("backwardsR");	
 		entity.addComponent(new Transform());
-		var imageDrawable = new ImageDrawable(this.game.getImages().getBackwardsR(), new Rect(294, 114, 51, 50));
+		var imageDrawable = new ImageDrawable(this.game.getImages().getBackwardsR(), new Rect(292, 132, 51, 50));
 		entity.addComponent(imageDrawable);
 		this.addEntity(entity);
 	}

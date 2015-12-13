@@ -1,0 +1,52 @@
+Searching 68 files for "nextLevel"
+
+/Users/scottrick/projects/ld34/walter/gamescene.js:
+  168  		}
+  169  		else if (this.isShowingVictory) {
+  170: 			this.nextLevel();
+  171  		}
+  172  	}
+  ...
+  296  }
+  297  
+  298: GameScene.prototype.nextLevel = function() {
+  299  	console.log("NEXT LEVEL!");
+  300: 	if (this.level.nextLevel != null) {
+  301: 		this.game.setNextScene(new GameScene(this.game, this.level.nextLevel));
+  302  	}
+  303  	else {
+
+/Users/scottrick/projects/ld34/walter/levels/level.js:
+   19  	this.progress = 0.0;
+   20  
+   21: 	this.nextLevel = null;
+   22  };
+   23  
+
+/Users/scottrick/projects/ld34/walter/levels/level1.js:
+   13  	this.numberToFinish = 20;
+   14  
+   15: 	this.nextLevel = new Level2();
+   16  }
+   17  
+
+/Users/scottrick/projects/ld34/walter/levels/level2.js:
+   11  	this.numberToFinish = 20;
+   12  
+   13: 	// this.nextLevel = new Level3();
+   14  }
+   15  
+
+7 matches across 4 files
+
+
+Searching 68 files for "new BoundarySys"
+
+/Users/scottrick/projects/ld34/walter/gamescene.js:
+   40  	this.addSystem(new MonsterSpawnSystem());
+   41  	this.addSystem(new GameSystem());
+   42: 	this.addSystem(new BoundarySystem(new Rect(-100, -100, 1000, 800)));
+   43  
+   44  	var gameEntity = new Entity("game entity");
+
+1 match in 1 file

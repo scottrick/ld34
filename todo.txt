@@ -2,15 +2,20 @@ MUST HAVE
 ----------------------
 levels
 
+dialog issues with them overlapping
+
 lose if something hits you?
+
+tweak monster hit points on levels / and monster types
 
 make end game scene
 	-> with fireworks?
-	
+
 music
 
 disable debug slow-mo / pause / new key
-
+	
+	turn off key print out
 
 
 
