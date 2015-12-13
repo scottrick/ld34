@@ -106,6 +106,8 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 			this.level.monsterDestroyed(monsterEntity);
 			this.progressRectDrawable.rect.w = this.progressWidth * this.level.getProgress();
 
+			theSounds.getNextExplodeSound().play();
+
 			if (this.level.isComplete()) {
 				this.levelComplete();
 			}

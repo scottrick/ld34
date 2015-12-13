@@ -20,6 +20,8 @@ disable debug slow-mo / pause / new key
 
 EXTRA
 ----------------------
+better sound effects
+
 rare burning monsters, huge eexplosions!
 
 	-> boss?

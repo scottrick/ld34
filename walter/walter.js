@@ -95,6 +95,8 @@ Walter.prototype.fireRightNormal = function() {
 	fireEntity.addComponent(new Weapon(1, "fire", true));
 
 	this.scene.addEntity(fireEntity);
+
+	this.playFireballSound();
 }
 
 Walter.prototype.startChannelingRight = function() {
@@ -132,6 +134,8 @@ Walter.prototype.fireRightCharged = function(chargeDuration) {
 		endEntity.addComponent(new Movement(velocity));
 		this.scene.addEntity(endEntity);
 	}
+
+	this.playLightningSound();
 }
 
 Walter.prototype.fireLeftNormal = function() {
@@ -156,6 +160,8 @@ Walter.prototype.fireLeftNormal = function() {
 	fireEntity.addComponent(new Weapon());
 
 	this.scene.addEntity(fireEntity);
+
+	this.playFireballSound();
 }
 
 Walter.prototype.startChannelingLeft = function() {
@@ -193,6 +199,8 @@ Walter.prototype.fireLeftCharged = function(chargeDuration) {
 		endEntity.addComponent(new Movement(velocity));
 		this.scene.addEntity(endEntity);
 	}
+
+	this.playLightningSound();
 }
 
 Walter.prototype.aDown = function() {
@@ -211,6 +219,14 @@ Walter.prototype.aUp = function() {
 
 	this.leftDown = false;
 	this.leftDownDuration = 0;
+}
+
+Walter.prototype.playFireballSound = function() {
+	theSounds.getNextFireballSound().play();
+}
+
+Walter.prototype.playLightningSound = function() {
+	theSounds.getNextLightningSound().play();
 }
 
 Walter.prototype.randomAngleOffset = function() {
