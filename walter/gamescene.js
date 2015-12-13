@@ -150,6 +150,12 @@ GameScene.prototype.handleKeyUp = function(key) {
 		return;
 	}
 
+	if (Game.DEBUG) {
+		if (key == 84) { // T
+			this.levelComplete();
+		}
+	}
+
 	if (key == 65) { // A
 		this.walter.aUp();
 	}
@@ -189,12 +195,12 @@ GameScene.prototype.levelComplete = function() {
 
 			//explode it
 			var lightningExplosionEntity = new Entity("endgame explosion");
-			lightningExplosionEntity.addComponent(new Explosion(0, 2, "lightning"));
+			lightningExplosionEntity.addComponent(new Explosion(0, 3, "lightning"));
 			lightningExplosionEntity.addComponent(entity.components[Transform.type].copy());
 			this.addEntity(lightningExplosionEntity);
 
 			var fireExplosionEntity = new Entity("endgame explosion");
-			fireExplosionEntity.addComponent(new Explosion(0, 2, "fire"));
+			fireExplosionEntity.addComponent(new Explosion(0, 3, "fire"));
 			fireExplosionEntity.addComponent(entity.components[Transform.type].copy());
 			this.addEntity(fireExplosionEntity);
 		}

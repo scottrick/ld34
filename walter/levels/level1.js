@@ -5,7 +5,7 @@ function Level1() {
 	Level.call(this);
 
 	this.numberDestroyed = 0;
-	this.numberToFinish = 2;
+	this.numberToFinish = 20;
 
 	this.nextLevel = new Level2();
 }
