@@ -12,6 +12,7 @@ function Images(document) {
 	this.walterPixel = document.getElementById("walterPixel");
 	this.leftWing = document.getElementById("leftWing2");
 	this.rightWing = document.getElementById("rightWing2");
+	this.fireFeather = document.getElementById("fireFeather");
 	this.wand = document.getElementById("wand");
 
 	this.flames = []; 
@@ -97,6 +98,10 @@ Images.prototype.getLeftWing = function() {
 
 Images.prototype.getRightWing = function() {
 	return this.rightWing;
+}
+
+Images.prototype.getFireFeather = function() {
+	return this.fireFeather;
 }
 
 Images.prototype.getWand = function() {

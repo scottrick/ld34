@@ -21,11 +21,15 @@ TitleScene.prototype.handleKeyUp = function(key) {
 
 	if (key == 32) {
 		//SPACEBAR start the game at the first level
-		this.game.setNextScene(new GameScene(this.game, null, true));
+		this.game.setNextScene(new GameScene(this.game, new Level1(), true));
 	}
 }
 
 TitleScene.prototype.setup = function() {
+	this.addSystem(new FireSystem());
+	this.addSystem(new FlameSystem());
+	this.addSystem(new MovementSystem());
+
 	{
 		var titleTextEntity = new Entity("title text");	
 		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, -5));
@@ -64,7 +68,7 @@ TitleScene.prototype.setup = function() {
 		var walterSplashEntity = new Entity("walter corner");	
 		walterSplashEntity.addComponent(new Transform());
 		var imageDrawable = new ImageDrawable(this.game.getImages().getSplashWalter(), new Rect(404, 118, 396, 482));
-		imageDrawable.z = -10;
+		imageDrawable.z = -5;
 		walterSplashEntity.addComponent(imageDrawable);
 		this.addEntity(walterSplashEntity);
 	}
@@ -97,6 +101,29 @@ TitleScene.prototype.setup = function() {
 		entity.addComponent(new Transform());
 		var imageDrawable = new ImageDrawable(this.game.getImages().getBackwardsR(), new Rect(294, 114, 51, 50));
 		entity.addComponent(imageDrawable);
+		this.addEntity(entity);
+	}
+
+	var fireStartX = 386;
+
+	{
+		var forestBackgroundEntity = new Entity("fire feather");	
+		forestBackgroundEntity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getFireFeather(), new Rect(fireStartX, 560, 96, 40));
+		imageDrawable.z = -10;
+		forestBackgroundEntity.addComponent(imageDrawable);
+		this.addEntity(forestBackgroundEntity);
+	}
+
+	{
+		var entity = new Entity("test fire");	
+		var movement = new Movement(null, null, 360);
+		var drawable = new ImageDrawable(this.game.getImages().getFireball());
+
+		entity.addComponent(movement);
+		entity.addComponent(drawable);
+		entity.addComponent(new Transform(new Vector(fireStartX + 40, 532), new Vector(60, 60), null, -6));
+		entity.addComponent(new Fire(3));
 		this.addEntity(entity);
 	}
 }

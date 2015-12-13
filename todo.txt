@@ -8,6 +8,8 @@ make end game scene
 
 music
 
+disable debug slow-mo / pause / new key
+
 
 
 
