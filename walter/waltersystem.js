@@ -27,5 +27,4 @@ WalterSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 			/* start channeling */
 		}
 	}
-
 }

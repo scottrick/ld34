@@ -1,8 +1,8 @@
-RectDrawable.prototype = new Component();
+RectDrawable.prototype = new Drawable();
 RectDrawable.prototype.constructor = RectDrawable;
 
 function RectDrawable(rect) {
-	Component.call(this, Drawable.type);
+	Drawable.call(this);
 
 	if (rect == null) {
 		this.rect = new Rect(-0.5, -0.5, 1, 1);
