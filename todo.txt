@@ -1,10 +1,11 @@
-text entity
-
-
-make title scene
-make game scene
+MUST HAVE
+----------------------
+update help text
 make end game scene
 
-WALTER the WISE: Wizard for Hire   
-	(the R's are backwards)
 
+
+
+EXTRA
+----------------------
+if you release both charges at once, at full, then big explosion?

@@ -6,6 +6,7 @@ function Images(document) {
 	this.forestSmall = document.getElementById("forestSmall");
 	this.ground = document.getElementById("ground");
 	this.levelback = document.getElementById("levelback");
+	this.backwardsR = document.getElementById("backwardsR");
 	this.owlPixel = document.getElementById("owlPixel");
 	this.walter = document.getElementById("walter");
 	this.walterPixel = document.getElementById("walterPixel");
@@ -86,6 +87,10 @@ Images.prototype.getWand = function() {
 
 Images.prototype.getLevelBackground = function() {
 	return this.levelback;
+}
+
+Images.prototype.getBackwardsR = function() {
+	return this.backwardsR;
 }
 
 Images.prototype.getSplashWalter = function() {

@@ -27,7 +27,7 @@ TitleScene.prototype.setup = function() {
 	{
 		var titleTextEntity = new Entity("title text");	
 		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, -5));
-		var textComponent = new TextDrawable("Walter the Wise");
+		var textComponent = new TextDrawable("Walte  the Wise");
 		textComponent.font = "72px Courier";
 		textComponent.fontColor = WalterColors.owlLightBrown;
 
@@ -87,6 +87,14 @@ TitleScene.prototype.setup = function() {
 		rectDrawable.z = -5;
 		entity.addComponent(rectDrawable);
 
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("backwardsR");	
+		entity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getBackwardsR(), new Rect(294, 114, 51, 50));
+		entity.addComponent(imageDrawable);
 		this.addEntity(entity);
 	}
 }
