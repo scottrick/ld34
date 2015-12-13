@@ -25,7 +25,8 @@ function Walter(rightWing, leftWing, transform, scene) {
 	this.rightChannelAngle = this.rightChannelAngleStart;
 	this.rightChannelAngleUpSpeed = -150;
 	this.rightChannelAngleDownSpeed = 90;
-	this.rightChannelingTargetPos = new Vector();
+	this.rightChannelingTargetPos = transform.position.copy();
+	this.rightChannelingTargetPos.x += 48;
 
 	var rightEntity = new Entity("right channel entity");
 	rightEntity.addComponent(new Transform());
@@ -43,7 +44,9 @@ function Walter(rightWing, leftWing, transform, scene) {
 	this.leftChannelAngle = this.leftChannelAngleStart;
 	this.leftChannelAngleUpSpeed = 150;
 	this.leftChannelAngleDownSpeed = -90;
-	this.leftChannelingTargetPos = new Vector();
+	this.leftChannelingTargetPos = transform.position.copy();
+	this.leftChannelingTargetPos.x -= 48;
+
 
 	var leftEntity = new Entity("left channel entity");
 	leftEntity.addComponent(new Transform());

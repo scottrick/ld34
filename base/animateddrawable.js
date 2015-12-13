@@ -1,7 +1,7 @@
 AnimatedDrawable.prototype = new ImageDrawable();
 AnimatedDrawable.prototype.constructor = AnimatedDrawable;
 
-AnimatedDrawable.switchTime = 0.8;
+AnimatedDrawable.switchTime = 0.3;
 
 function AnimatedDrawable(images, rect) {
 	Drawable.call(this);
