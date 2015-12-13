@@ -14,18 +14,31 @@ function Level3() {
 }
 
 Level3.prototype.setup = function(scene) {
+	var easyMonster = new Monster();
+	easyMonster.health = 1;
+	easyMonster.affectedByGravity = true;
+	easyMonster.shouldWobble = false;
+	easyMonster.images = scene.game.getImages().getMonster1();
+
+	var monsterTemplate = new Monster();
+	monsterTemplate.health = 2;
+	monsterTemplate.affectedByGravity = false;
+	monsterTemplate.shouldWobble = true;
+	monsterTemplate.monsterToSpawn = easyMonster;
+	monsterTemplate.monsterToSpawnDelay = 1;
+	monsterTemplate.images = scene.game.getImages().getMonster2();
+
 	{
 		var entity = new Entity("air monster spawner");	
 		entity.addComponent(new Transform(new Vector(-Level.airSize / 2, 100), new Vector(-Level.airSize, Level.airSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(1, 0), 1.4, scene.game.getImages().getMonster2()));
+		entity.addComponent(new Spawner(new Vector(1, 0), 1.4, monsterTemplate));
 		scene.addEntity(entity);
 	}
 
 	{
 		var entity = new Entity("air monster spawner");	
 		entity.addComponent(new Transform(new Vector(800 + Level.airSize / 2, 160), new Vector(Level.airSize, Level.airSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(-1, 0), 1.4, scene.game.getImages().getMonster2()));
+		entity.addComponent(new Spawner(new Vector(-1, 0), 1.4, monsterTemplate));
 		scene.addEntity(entity);
 	}
 }
-

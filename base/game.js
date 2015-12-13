@@ -33,7 +33,6 @@ Game.DEBUG = true;
 
 Game.updatesPerSecond = 60; /* Game state updates per second.  Updates are not skipped! */
 Game.drawsPerSecond = 60;	/* Target number of redraws per second.  Draws WILL be skipped if it gets behind. */
-Game.time = 0.0;
 Game.scene = null; 			/* the current scene */
 Game.nextScene = null; 		/* the scene we should switch to next */
 Game.currentMusic = null;

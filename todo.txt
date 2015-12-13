@@ -1,8 +1,6 @@
 MUST HAVE
 ----------------------
 levels
-	- spawnning monsters dropping in the sky
-	-> add monster gravity to MonsterSystem
 
 lose if something hits you?
 
@@ -10,6 +8,9 @@ tweak monster hit points on levels / and monster types
 
 make end game scene
 	-> with fireworks?
+
+
+
 
 
 disable debug slow-mo / pause / new key

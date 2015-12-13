@@ -121,7 +121,7 @@ Walter.prototype.fireRightCharged = function(chargeDuration) {
 		lightningEntity.addComponent(new Transform());
 		lightningEntity.addComponent(drawable);
 		lightningEntity.addComponent(new Lightning());
-		lightningEntity.addComponent(new Weapon(4, "lightning", false));
+		lightningEntity.addComponent(new Weapon(3, "lightning", false));
 		lightningEntity.addComponent(new LineBody(position, endPoint));
 
 		this.scene.addEntity(lightningEntity);
@@ -186,7 +186,7 @@ Walter.prototype.fireLeftCharged = function(chargeDuration) {
 		lightningEntity.addComponent(new Transform());
 		lightningEntity.addComponent(drawable);
 		lightningEntity.addComponent(new Lightning());
-		lightningEntity.addComponent(new Weapon(4, "lightning", false));
+		lightningEntity.addComponent(new Weapon(3, "lightning", false));
 		lightningEntity.addComponent(new LineBody(position, endPoint));
 
 		this.scene.addEntity(lightningEntity);

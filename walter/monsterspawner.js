@@ -23,17 +23,17 @@ MonsterSpawnSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 		velocity.multiply(100);
 
 		var movement = new Movement(velocity);
-		var drawable = new AnimatedDrawable(spawner.images);
+		var drawable = new AnimatedDrawable(spawner.monster.images);
 		var body = new CircleBody();
 
-		// entity.addComponent(new Transform(new Vector(150, 516), new Vector(-48, 48), null, 6));
-		// entity.addComponent(new Monster());
-		// entity.addComponent(new Movement(new Vector(12, 0)));
-		// entity.addComponent(new AnimatedDrawable(this.game.getImages().getMonster1()));
-		// entity.addComponent(new CircleBody());
+		var monster = new Monster();
+		monster.fromMonster(spawner.monster);
 
-		monsterEntity.addComponent(new Transform(transform.position.copy(), transform.scale.copy(), null, 6));
-		monsterEntity.addComponent(new Monster());
+		var newScale = transform.scale.copy();
+		newScale.multiply(0.2 * (Math.random() - 0.5) + 0.9);
+
+		monsterEntity.addComponent(new Transform(transform.position.copy(), newScale, null, 6));
+		monsterEntity.addComponent(monster);
 		monsterEntity.addComponent(movement);
 		monsterEntity.addComponent(drawable);
 		monsterEntity.addComponent(body);
