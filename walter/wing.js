@@ -3,10 +3,11 @@ Wing.prototype.constructor = Wing;
 
 Wing.type = "wing";
 
-function Wing(baseTransform) {
+function Wing(baseTransform, realTransform) {
 	Component.call(this, Wing.type);
 
 	this.baseTransform = baseTransform;
+	this.realTransform = realTransform;
 
 	this.isWaving = false;
 	this.isRetracting = false;

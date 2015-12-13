@@ -9,8 +9,8 @@ function Images(document) {
 	this.owlPixel = document.getElementById("owlPixel");
 	this.walter = document.getElementById("walter");
 	this.walterPixel = document.getElementById("walterPixel");
-	this.leftWing = document.getElementById("leftWing");
-	this.rightWing = document.getElementById("rightWing");
+	this.leftWing = document.getElementById("leftWing2");
+	this.rightWing = document.getElementById("rightWing2");
 	this.wand = document.getElementById("wand");
 
 	this.flames = []; 

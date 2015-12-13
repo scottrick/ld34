@@ -327,15 +327,15 @@ GameScene.prototype.setupBase = function() {
 
 	{
 		var entity = new Entity("Wing Right");	
-		var transform = new Transform(new Vector(400 + 5, 540 - walterHidth / 3 * 2), null, 0);
+		var transform = new Transform(new Vector(400 + 1, 540 - walterHidth / 3 * 2), null, 0);
 		entity.addComponent(transform);
 
 		var wingImage = this.game.getImages().getRightWing();
-		var imageDrawable = new ImageDrawable(wingImage, new Rect(0, 0, wingWidth, wingHeight));
+		var imageDrawable = new ImageDrawable(wingImage, new Rect(-32, 0, 64, wingHeight));
 		imageDrawable.z = 4;
 		entity.addComponent(imageDrawable);
 
-		this.rightWing = new Wing(transform.copy());
+		this.rightWing = new Wing(transform.copy(), transform);
 		this.rightWing.waveDeltaX = -this.rightWing.waveDeltaX; 
 		entity.addComponent(this.rightWing);
 
@@ -344,15 +344,15 @@ GameScene.prototype.setupBase = function() {
 
 	{
 		var entity = new Entity("Wing Left");	
-		var transform = new Transform(new Vector(400 - 4, 540 - walterHidth / 3 * 2), null, 0);
+		var transform = new Transform(new Vector(400 + 1, 540 - walterHidth / 3 * 2), null, 0);
 		entity.addComponent(transform);
 
 		var wingImage = this.game.getImages().getLeftWing();
-		var imageDrawable = new ImageDrawable(wingImage, new Rect(0, 0, -wingWidth, wingHeight));
+		var imageDrawable = new ImageDrawable(wingImage, new Rect(32, 0, -64, wingHeight));
 		imageDrawable.z = 4;
 		entity.addComponent(imageDrawable);
 
-		this.leftWing = new Wing(transform.copy());
+		this.leftWing = new Wing(transform.copy(), transform);
 		entity.addComponent(this.leftWing);
 
 		this.addEntity(entity);

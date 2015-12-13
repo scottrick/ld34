@@ -40,6 +40,8 @@ WalterSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 		}
 	}
 
+	walter.rightWing.realTransform.rotation = walter.rightChannelAngle - walter.rightChannelAngleStart;
+
 	var dir = walter.dirForAngle(walter.rightChannelAngle);
 	walter.rightChannelingTargetPos.x = transform.position.x + dir.x * 48;
 	walter.rightChannelingTargetPos.y = transform.position.y + dir.y * 48;
@@ -71,6 +73,8 @@ WalterSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 			walter.leftChannelAngle = walter.leftChannelAngleStart;
 		}
 	}
+
+	walter.leftWing.realTransform.rotation = walter.leftChannelAngle - walter.leftChannelAngleStart;
 
 	var dir = walter.dirForAngle(walter.leftChannelAngle);
 	walter.leftChannelingTargetPos.x = transform.position.x + dir.x * 48;
