@@ -187,8 +187,6 @@ Game.setMusic = function(music) {
 		if (Game.currentMusic == this) {
 		    this.currentTime = 0;
 
-		    console.log("scene " + Game.scene);
-		    console.log("  -> repeat?  " + Game.scene.shouldMusicRepeat());
 		    if (Game.scene.shouldMusicRepeat()) {
 			    this.play();
 			}
