@@ -138,7 +138,7 @@ Game.handleKeyUp = function(key) {
 	Game.scene.handleKeyUp(key);
 
 	if (Game.DEBUG) {
-		if (key == 32) { // spacebar
+		if (key == 80) { // pause
 			this.scene.togglePause();
 		}
 

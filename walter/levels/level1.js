@@ -4,6 +4,11 @@ Level1.prototype.constructor = Level1;
 function Level1() {
 	Level.call(this);
 
+	this.showHelp = true;
+
+	this.name = "Level 1: Ground Assault";
+	this.description = "Watch out for the troops on the ground!";
+
 	this.numberDestroyed = 0;
 	this.numberToFinish = 20;
 

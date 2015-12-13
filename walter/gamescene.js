@@ -1,7 +1,7 @@
 GameScene.prototype = new Scene();
 GameScene.prototype.constructor = GameScene;
 
-function GameScene(game, level, showHelp) {
+function GameScene(game, level) {
 	Scene.call(this, game);
 
 	this.dumpDelay = 1;
@@ -9,6 +9,13 @@ function GameScene(game, level, showHelp) {
 
     this.isHelpShowning = false;
     this.helpEntities = [];
+
+    this.hasShownIntro = false;
+    this.isIntroShowning = false;
+    this.levelIntroEntities = [];
+
+    this.hasStarted = false;
+    this.timeToStart = 0.5;
 
     this.progressWidth = 400;
     this.progressHeight = 24;
@@ -28,17 +35,24 @@ function GameScene(game, level, showHelp) {
 	this.addSystem(new CollisionSystem(this));
 	this.addSystem(new MonsterSystem());
 	this.addSystem(new MonsterSpawnSystem());
+	this.addSystem(new GameSystem());
 	this.addSystem(new BoundarySystem(new Rect(-50, -50, 900, 700)));
 
-	this.setupHelp();
-    this.setupBase();
-	this.setupLevel();
+	var gameEntity = new Entity("game entity");
+	gameEntity.addComponent(new SceneComponent(this));
+	this.addEntity(gameEntity);
 
-	if (showHelp) {
+	this.setupHelp();
+	this.setupIntro();
+    this.setupBase();
+
+	if (this.level.showHelp) {
+		this.hideIntro();
 		this.showHelp();
 	}
 	else {
 		this.hideHelp();
+		this.showIntro();
 	}
 }
 
@@ -142,6 +156,12 @@ GameScene.prototype.handleKeyUp = function(key) {
 		}
 	}
 
+	if (key == 32) { // spacebar
+		if (this.isIntroShowning) {
+			this.hideIntro();
+		}
+	}
+
 	if (this.isPaused()) {
 		return;
 	}
@@ -183,6 +203,39 @@ GameScene.prototype.hideHelp = function() {
 		var entity = this.helpEntities[i];
 		entity.enabled = false;
 	}
+
+	if (!this.hasShownIntro) {
+		this.showIntro();
+	}
+}
+
+GameScene.prototype.showIntro = function() {
+	this.isIntroShowning = true;
+	this.paused = true;
+
+	for (var i = 0; i < this.levelIntroEntities.length; i++) {
+		var entity = this.levelIntroEntities[i];
+		entity.enabled = true;
+	}
+}
+
+GameScene.prototype.hideIntro = function() {
+	this.isIntroShowning = false;
+	this.paused = false;
+
+	for (var i = 0; i < this.levelIntroEntities.length; i++) {
+		var entity = this.levelIntroEntities[i];
+		entity.enabled = false;
+	}
+}
+
+GameScene.prototype.start = function() {
+	if (this.hasStarted) {
+		return;
+	}
+
+	this.setupLevel();
+	this.hasStarted = true;
 }
 
 GameScene.prototype.levelComplete = function() {
@@ -340,6 +393,84 @@ GameScene.prototype.setupHelp = function() {
 
 GameScene.prototype.setupLevel = function() {
 	this.level.setup(this);
+}
+
+GameScene.prototype.setupIntro = function() {
+	{
+		var entity = new Entity("level intro full background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(0, 0, 800, 600));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.owlLightBrown;
+		rectDrawable.alpha = 0.35;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.levelIntroEntities.push(entity);
+	}
+	{
+		var entity = new Entity("level intro popup background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(100, 100, 600, 400));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.owlLightBrown;
+		rectDrawable.alpha = 0.6;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.levelIntroEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("level intro text header");	
+		entity.addComponent(new Transform(new Vector(400, 140)));
+
+		var textComponent = new TextDrawable(this.level.name);
+		textComponent.font = "28px Courier";
+		textComponent.fontColor = WalterColors.owlLightBrown;
+		textComponent.alignment = "center"
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.levelIntroEntities.push(entity);
+	}
+
+	var yValue = 300;
+
+	{
+		var entity = new Entity("level intro text 1.0");	
+		entity.addComponent(new Transform(new Vector(400, yValue)));
+
+		var textComponent = new TextDrawable(this.level.description);
+		textComponent.font = "20px Courier";
+		textComponent.fontColor = WalterColors.spellBlue;
+		textComponent.alignment = "center"
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.levelIntroEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("level intro text footer");	
+		entity.addComponent(new Transform(new Vector(400, 480)));
+
+		var textComponent = new TextDrawable("Press [spacebar]");
+		textComponent.font = "20px Courier";
+		textComponent.fontColor = WalterColors.owlLightBrown;
+		textComponent.z = 11;
+		textComponent.alignment = "center"
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.levelIntroEntities.push(entity);
+	}
 }
 
 GameScene.prototype.setupBase = function() {

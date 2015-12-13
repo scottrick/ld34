@@ -14,6 +14,8 @@ var Level = function() {
 	this.name = "level name";
 	this.description = "description text";
 
+	this.showHelp = false;
+
 	this.progress = 0.0;
 
 	this.nextLevel = null;

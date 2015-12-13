@@ -21,7 +21,7 @@ TitleScene.prototype.handleKeyUp = function(key) {
 
 	if (key == 32) {
 		//SPACEBAR start the game at the first level
-		this.game.setNextScene(new GameScene(this.game, new Level1(), true));
+		this.game.setNextScene(new GameScene(this.game, new Level1()));
 	}
 }
 
@@ -57,7 +57,7 @@ TitleScene.prototype.setup = function() {
 	{
 		var entity = new Entity("start game text");	
 		entity.addComponent(new Transform(new Vector(20, 440), null, 0));
-		var textComponent = new TextDrawable("[spacebar to start]");
+		var textComponent = new TextDrawable("Press [spacebar]");
 		textComponent.font = "24px Courier";
 		textComponent.fontColor = WalterColors.owlLightBrown;
 		entity.addComponent(textComponent);
