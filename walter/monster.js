@@ -8,3 +8,7 @@ function Monster() {
 
 	this.health = 2;
 }
+
+Monster.prototype.isAlive = function() {
+	return this.health > 0;
+}

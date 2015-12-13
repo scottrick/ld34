@@ -3,7 +3,7 @@ Walter.prototype.constructor = Walter;
 
 Walter.type = "walter";
 
-Walter.channelStartDuration = 0.2;
+Walter.channelStartDuration = 0.18;
 
 Walter.fireSpeed = 480;
 Walter.fireballSize = 18;
@@ -46,7 +46,6 @@ function Walter(rightWing, leftWing, transform, scene) {
 	this.leftChannelAngleDownSpeed = -90;
 	this.leftChannelingTargetPos = transform.position.copy();
 	this.leftChannelingTargetPos.x -= 48;
-
 
 	var leftEntity = new Entity("left channel entity");
 	leftEntity.addComponent(new Transform());
@@ -103,8 +102,35 @@ Walter.prototype.startChannelingRight = function() {
 }
 
 Walter.prototype.fireRightCharged = function(chargeDuration) {
-	console.log("fire RIGHT charged: " + chargeDuration);
 	this.rightChanneling = false;
+
+	var lightningEntity = new Entity("lightning");
+	var position = this.rightWing.baseTransform.position.copy();
+	position.y += 10;
+	position.x += 16;
+
+	var target = position.copy();
+	var drawable = new VectorDrawable(this.scene.game.getImages().getLightning(), position, target, Lightning.lightningWidth);
+
+	var endPoint = this.dirForAngle(this.rightChannelAngle);
+	endPoint.multiply(50000);
+
+	lightningEntity.addComponent(new Transform());
+	lightningEntity.addComponent(drawable);
+	lightningEntity.addComponent(new Lightning());
+	lightningEntity.addComponent(new Weapon(10, false));
+	lightningEntity.addComponent(new LineBody(position, endPoint));
+
+	this.scene.addEntity(lightningEntity);
+
+	var velocity = this.dirForAngle(this.rightChannelAngle);
+	velocity.multiply(Lightning.lightningSpeed);
+
+	var endEntity = new Entity("lightningEnd");
+	endEntity.addComponent(new Transform(target), new Vector(Lightning.lightningWidth, Lightning.lightningWidth), null, 6);
+	endEntity.addComponent(new Movement(velocity));
+	endEntity.addComponent(new CircleBody());
+	this.scene.addEntity(endEntity);
 }
 
 Walter.prototype.fireLeftNormal = function() {

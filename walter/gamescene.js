@@ -17,6 +17,7 @@ function GameScene(game, level, showHelp) {
 	this.addSystem(new WingSystem());
 	this.addSystem(new FireSystem());
 	this.addSystem(new FlameSystem());
+	this.addSystem(new LightningSystem());
 	this.addSystem(new ExplosionSystem());
 	this.addSystem(new CollisionSystem(this));
 	this.addSystem(new MonsterSystem());
@@ -62,7 +63,7 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 		weaponEntity = entity2;
 	}
 
-	if (monster != null && weapon != null) {
+	if (monster != null && weapon != null && monster.isAlive()) {
 		monster.health -= weapon.damage;
 		if (monster.health <= 0) {
 			this.removeEntity(monsterEntity);
@@ -70,11 +71,13 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 			/* add a bigger explosion for the monster death */
 			var entity = new Entity("explosion");
 			entity.addComponent(new Explosion(0, 4));
-			entity.addComponent(weaponEntity.components[Transform.type].copy());
+			entity.addComponent(monsterEntity.components[Transform.type].copy());
 			this.addEntity(entity);
 		}
 
-		this.removeEntity(weaponEntity);
+		if (weapon.shouldRemoveOnImpact) {
+			this.removeEntity(weaponEntity);
+		}
 
 		/* add little explosion for the weapon dissipation */
 		var entity = new Entity("explosion");
@@ -313,6 +316,20 @@ GameScene.prototype.setupLevel = function() {
 	{
 		var entity = new Entity("monster spawner");	
 		entity.addComponent(new Transform(new Vector(824, 516), new Vector(48, 48), null, 6));
+		entity.addComponent(new Spawner(new Vector(-1, 0), 2));
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("monster spawner");	
+		entity.addComponent(new Transform(new Vector(-24, 100), new Vector(-48, 48), null, 6));
+		entity.addComponent(new Spawner(new Vector(1, 0), 2));
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("monster spawner");	
+		entity.addComponent(new Transform(new Vector(824, 160), new Vector(48, 48), null, 6));
 		entity.addComponent(new Spawner(new Vector(-1, 0), 2));
 		this.addEntity(entity);
 	}
