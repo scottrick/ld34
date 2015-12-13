@@ -2,10 +2,9 @@ MUST HAVE
 ----------------------
 lose if something hits you?
 
-add a flying monster type
-	make thm a little bigger?
-
 levels
+	-> boss?
+
 make end game scene
 
 update help text

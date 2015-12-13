@@ -316,31 +316,34 @@ GameScene.prototype.setupHelp = function() {
 }
 
 GameScene.prototype.setupLevel = function() {
+	var groundSize = 48;
+	var airSize = 60;
+
 	{
-		var entity = new Entity("monster spawner");	
-		entity.addComponent(new Transform(new Vector(-24, 516), new Vector(-48, 48), null, 6));
-		entity.addComponent(new Spawner(new Vector(1, 0), 2));
+		var entity = new Entity("ground monster spawner");	
+		entity.addComponent(new Transform(new Vector(-24, 516), new Vector(-groundSize, groundSize), null, 6));
+		entity.addComponent(new Spawner(new Vector(1, 0), 2, this.game.getImages().getMonster1()));
 		this.addEntity(entity);
 	}
 
 	{
-		var entity = new Entity("monster spawner");	
-		entity.addComponent(new Transform(new Vector(824, 516), new Vector(48, 48), null, 6));
-		entity.addComponent(new Spawner(new Vector(-1, 0), 2));
+		var entity = new Entity("ground monster spawner");	
+		entity.addComponent(new Transform(new Vector(824, 516), new Vector(groundSize, groundSize), null, 6));
+		entity.addComponent(new Spawner(new Vector(-1, 0), 2, this.game.getImages().getMonster1()));
 		this.addEntity(entity);
 	}
 
 	{
-		var entity = new Entity("monster spawner");	
-		entity.addComponent(new Transform(new Vector(-24, 100), new Vector(-48, 48), null, 6));
-		entity.addComponent(new Spawner(new Vector(1, 0), 2));
+		var entity = new Entity("air monster spawner");	
+		entity.addComponent(new Transform(new Vector(-24, 100), new Vector(-airSize, airSize), null, 6));
+		entity.addComponent(new Spawner(new Vector(1, 0), 2, this.game.getImages().getMonster2()));
 		this.addEntity(entity);
 	}
 
 	{
-		var entity = new Entity("monster spawner");	
-		entity.addComponent(new Transform(new Vector(824, 160), new Vector(48, 48), null, 6));
-		entity.addComponent(new Spawner(new Vector(-1, 0), 2));
+		var entity = new Entity("air monster spawner");	
+		entity.addComponent(new Transform(new Vector(824, 160), new Vector(airSize, airSize), null, 6));
+		entity.addComponent(new Spawner(new Vector(-1, 0), 2, this.game.getImages().getMonster2()));
 		this.addEntity(entity);
 	}
 }

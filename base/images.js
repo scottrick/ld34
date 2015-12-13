@@ -30,6 +30,10 @@ function Images(document) {
 	this.monster1.push(document.getElementById("monster1_1"));
 	this.monster1.push(document.getElementById("monster1_2"));
 
+	this.monster2 = []; 
+	this.monster2.push(document.getElementById("monster2_1"));
+	this.monster2.push(document.getElementById("monster2_2"));
+
 	this.spark = document.getElementById("spark");
 	this.lightning = document.getElementById("lightning");
 	this.fireball = document.getElementById("fireball");
@@ -37,6 +41,10 @@ function Images(document) {
 
 Images.prototype.getMonster1 = function() {
 	return this.monster1;
+}
+
+Images.prototype.getMonster2 = function() {
+	return this.monster2;
 }
 
 Images.prototype.getNextFlame = function() {
