@@ -392,6 +392,7 @@ GameScene.prototype.nextLevel = function() {
 
 GameScene.prototype.restart = function() {
 	this.level.showHelp = false; // don't show help again for sure
+	this.level.progress = 0;
 	this.game.setNextScene(new GameScene(this.game, this.level));
 }
 
