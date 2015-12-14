@@ -30,7 +30,7 @@ MonsterSpawnSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 		monster.fromMonster(spawner.monster);
 
 		var newScale = transform.scale.copy();
-		newScale.multiply(0.2 * (Math.random() - 0.5) + 0.9);
+		newScale.multiply(0.1 * (Math.random() - 0.5) + 0.95);
 
 		monsterEntity.addComponent(new Transform(transform.position.copy(), newScale, null, 6));
 		monsterEntity.addComponent(monster);

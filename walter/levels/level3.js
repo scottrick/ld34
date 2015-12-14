@@ -8,9 +8,9 @@ function Level3() {
 	this.description = "Another sky assault, but with friends!";
 
 	this.numberDestroyed = 0;
-	this.numberToFinish = 32;
+	this.numberToFinish = 40;
 
-	// this.nextLevel = new Level4();
+	this.nextLevel = new Level4();
 }
 
 Level3.prototype.setup = function(scene) {
@@ -25,13 +25,13 @@ Level3.prototype.setup = function(scene) {
 	monsterTemplate.affectedByGravity = false;
 	monsterTemplate.shouldWobble = true;
 	monsterTemplate.monsterToSpawn = easyMonster;
-	monsterTemplate.monsterToSpawnDelay = 1;
+	monsterTemplate.monsterToSpawnDelay = 0.8;
 	monsterTemplate.images = scene.game.getImages().getMonster2();
 
 	{
 		var entity = new Entity("air monster spawner");	
 		entity.addComponent(new Transform(new Vector(-Level.airSize / 2, 100), new Vector(-Level.airSize, Level.airSize), null, 6));
-		entity.addComponent(new Spawner(new Vector(1, 0), 1.4, monsterTemplate));
+		entity.addComponent(new Spawner(new Vector(1, 0.1), 1.4, monsterTemplate));
 		scene.addEntity(entity);
 	}
 

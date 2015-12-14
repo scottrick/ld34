@@ -122,7 +122,7 @@ TitleScene.prototype.setup = function() {
 
 		entity.addComponent(movement);
 		entity.addComponent(drawable);
-		entity.addComponent(new Transform(new Vector(fireStartX + 40, 532), new Vector(60, 60), null, -6));
+		entity.addComponent(new Transform(new Vector(fireStartX + 40, 532), new Vector(60, 60), null, -4));
 		entity.addComponent(new Fire(3));
 		this.addEntity(entity);
 	}

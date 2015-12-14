@@ -6,8 +6,8 @@ function Level1() {
 
 	this.showHelp = true;
 
-	this.name = "Level 1: Ground Assault";
-	this.description = "Watch out for the troops on the ground!";
+	this.name = "Level 1: Skirmish";
+	this.description = "Survive!";
 
 	this.numberDestroyed = 0;
 	this.numberToFinish = 20;

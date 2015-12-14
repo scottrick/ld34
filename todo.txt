@@ -1,13 +1,12 @@
 MUST HAVE
 ----------------------
-levels
 
 lose if something hits you?
-
-tweak monster hit points on levels / and monster types
+	-> on death screen, have option to goto credit screen!
 
 make end game scene
 	-> with fireworks?
+	-> goto beginning
 
 
 

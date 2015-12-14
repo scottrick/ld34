@@ -39,7 +39,7 @@ function GameScene(game, level) {
 	this.addSystem(new MonsterSystem());
 	this.addSystem(new MonsterSpawnSystem());
 	this.addSystem(new GameSystem());
-	this.addSystem(new BoundarySystem(new Rect(-100, -100, 1000, 800)));
+	this.addSystem(new BoundarySystem(new Rect(-50, -50, 900, 700)));
 
 	var gameEntity = new Entity("game entity");
 	gameEntity.addComponent(new SceneComponent(this));
@@ -96,7 +96,7 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 
 			/* add a bigger explosion for the monster death */
 			var entity = new Entity("explosion");
-			entity.addComponent(new Explosion(0, 4));
+			entity.addComponent(new Explosion(0, 3));
 			var explosionTransform = monsterEntity.components[Transform.type].copy();
 			explosionTransform.scale.multiply(0.65);
 			entity.addComponent(explosionTransform);
@@ -282,12 +282,12 @@ GameScene.prototype.levelComplete = function() {
 
 			//explode it
 			var lightningExplosionEntity = new Entity("endgame explosion");
-			lightningExplosionEntity.addComponent(new Explosion(0, 3, "lightning"));
+			lightningExplosionEntity.addComponent(new Explosion(0, 2, "lightning"));
 			lightningExplosionEntity.addComponent(entity.components[Transform.type].copy());
 			this.addEntity(lightningExplosionEntity);
 
 			var fireExplosionEntity = new Entity("endgame explosion");
-			fireExplosionEntity.addComponent(new Explosion(0, 3, "fire"));
+			fireExplosionEntity.addComponent(new Explosion(0, 2, "fire"));
 			fireExplosionEntity.addComponent(entity.components[Transform.type].copy());
 			this.addEntity(fireExplosionEntity);
 		}
