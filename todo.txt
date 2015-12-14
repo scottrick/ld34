@@ -1,13 +1,9 @@
 MUST HAVE
 ----------------------
 
-lose if something hits you?
-	-> on death screen, have option to goto credit screen!
-
 make end game scene
 	-> with fireworks?
 	-> goto beginning
-
 
 
 

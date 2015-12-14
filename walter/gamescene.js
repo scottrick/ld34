@@ -7,6 +7,8 @@ function GameScene(game, level) {
 	this.dumpDelay = 1;
     this.slowMotionSpeed = 0.25;
 
+    this.walterEntities = []
+
     this.isHelpShowning = false;
     this.helpEntities = [];
 
@@ -16,6 +18,9 @@ function GameScene(game, level) {
 
     this.isShowingVictory = false;
     this.victoryEntities = [];
+
+    this.isShowingDefeat = false;
+    this.defeatEntities = [];
 
     this.hasStarted = false;
     this.timeToStart = 0.3;
@@ -48,9 +53,11 @@ function GameScene(game, level) {
 	this.setupHelp();
 	this.setupIntro();
 	this.setupVictory();
-    this.setupBase();
+	this.setupDefeat();
+	this.setupBase();
 
     this.hideVictory();
+    this.hideDefeat();
 
 	if (this.level.showHelp) {
 		this.hideIntro();
@@ -68,8 +75,10 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 
 	var monster = null;
 	var weapon = null;
+	var walter = null;
 	var monsterEntity = null;
 	var weaponEntity = null;
+	var walterEntity = null;
 
 	if (entity1.components[Monster.type] != null) {
 		monster = entity1.components[Monster.type];
@@ -87,6 +96,15 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 	if (entity2.components[Weapon.type] != null) {
 		weapon = entity2.components[Weapon.type];
 		weaponEntity = entity2;
+	}
+
+	if (entity1.components[Walter.type] != null) {
+		walter = entity1.components[Walter.type];
+		walterEntity = entity1;
+	}
+	if (entity2.components[Walter.type] != null) {
+		walter = entity2.components[Walter.type];
+		walterEntity = entity2;
 	}
 
 	if (monster != null && weapon != null && monster.isAlive()) {
@@ -130,6 +148,10 @@ GameScene.prototype.handleCollisionEvent = function(event) {
 
 		this.addEntity(entity);
 	}
+
+	if (walter != null && monster != null) {
+		this.levelFailed();
+	}
 }
 
 GameScene.prototype.handleKeyDown = function(key) {
@@ -171,6 +193,15 @@ GameScene.prototype.handleKeyUp = function(key) {
 		else if (this.isShowingVictory) {
 			this.nextLevel();
 		}
+		else if (this.isShowingDefeat) {
+			this.restart();
+		}
+	}
+
+	if (key == 27) { // ESC
+		if (this.isShowingDefeat) {
+			this.game.setNextScene(new VictoryScene(this.game));
+		}	
 	}
 
 	if (this.isPaused()) {
@@ -185,6 +216,10 @@ GameScene.prototype.handleKeyUp = function(key) {
 		if (key == 84) { // T
 			this.levelComplete();
 		}
+
+		if (key == 81) { // Q
+			this.levelFailed();
+		}
 	}
 
 	if (key == 65) { // A
@@ -197,7 +232,7 @@ GameScene.prototype.handleKeyUp = function(key) {
 }
 
 GameScene.prototype.showHelp = function() {
-	if (this.isShowingVictory || this.isIntroShowning) {
+	if (this.isShowingVictory || this.isIntroShowning || this.isShowingDefeat) {
 		return;
 	}
 
@@ -245,6 +280,24 @@ GameScene.prototype.hideIntro = function() {
 	}
 }
 
+GameScene.prototype.showDefeat = function() {
+	this.isShowingDefeat = true;
+
+	for (var i = 0; i < this.defeatEntities.length; i++) {
+		var entity = this.defeatEntities[i];
+		entity.enabled = true;
+	}
+}
+
+GameScene.prototype.hideDefeat = function() {
+	this.isShowingDefeat = false;
+
+	for (var i = 0; i < this.defeatEntities.length; i++) {
+		var entity = this.defeatEntities[i];
+		entity.enabled = false;
+	}
+}
+
 GameScene.prototype.showVictory = function() {
 	this.isShowingVictory = true;
 
@@ -273,6 +326,35 @@ GameScene.prototype.start = function() {
 }
 
 GameScene.prototype.levelComplete = function() {
+	this.levelIsComplete = true;
+	this.blowUpEverything();
+	this.showVictory();
+}
+
+GameScene.prototype.levelFailed = function() {
+	this.levelIsComplete = true;
+	this.blowUpEverything();
+	this.showDefeat();
+
+	for (var i = 0; i < this.walterEntities.length; i++) {
+		var walterEntity = this.walterEntities[i];
+
+		this.removeEntity(walterEntity);
+
+		//blow up walter
+		var lightningExplosionEntity = new Entity("walter explosion");
+		lightningExplosionEntity.addComponent(new Explosion(0, 2, "lightning"));
+		lightningExplosionEntity.addComponent(walterEntity.components[Transform.type].copy());
+		this.addEntity(lightningExplosionEntity);
+
+		var fireExplosionEntity = new Entity("walter explosion");
+		fireExplosionEntity.addComponent(new Explosion(0, 2, "fire"));
+		fireExplosionEntity.addComponent(walterEntity.components[Transform.type].copy());
+		this.addEntity(fireExplosionEntity);
+	}
+}
+
+GameScene.prototype.blowUpEverything = function() {
 	for (var i = 0; i < this.entities.length; i++) {
 		var entity = this.entities[i];
 
@@ -297,9 +379,6 @@ GameScene.prototype.levelComplete = function() {
 			this.removeEntity(entity);
 		}
 	}
-
-	this.levelIsComplete = true;
-	this.showVictory();
 }
 
 GameScene.prototype.nextLevel = function() {
@@ -309,6 +388,11 @@ GameScene.prototype.nextLevel = function() {
 	else {
 		this.game.setNextScene(new VictoryScene(this.game));
 	}
+}
+
+GameScene.prototype.restart = function() {
+	this.level.showHelp = false; // don't show help again for sure
+	this.game.setNextScene(new GameScene(this.game, this.level));
 }
 
 GameScene.prototype.setupHelp = function() {
@@ -518,6 +602,97 @@ GameScene.prototype.setupIntro = function() {
 	}
 }
 
+GameScene.prototype.setupDefeat = function() {
+	{
+		var entity = new Entity("defeat full background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(0, 0, 800, 600));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.defeatRed;
+		rectDrawable.alpha = 0.35;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.defeatEntities.push(entity);
+	}
+	{
+		var entity = new Entity("defeat popup background");	
+		entity.addComponent(new Transform());
+
+		var rectDrawable = new RectDrawable(new Rect(100, 100, 600, 400));
+		rectDrawable.fillColor = "#000";
+		rectDrawable.strokeColor = WalterColors.defeatRed;
+		rectDrawable.alpha = 0.6;
+		rectDrawable.z = 10;
+		entity.addComponent(rectDrawable);
+
+		this.addEntity(entity);
+		this.defeatEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("defeat text header");	
+		entity.addComponent(new Transform(new Vector(400, 140)));
+
+		var textComponent = new TextDrawable(this.level.name);
+		textComponent.font = "28px Courier";
+		textComponent.fontColor = WalterColors.defeatRed;
+		textComponent.alignment = "center"
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.defeatEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("defeat text 1.0");	
+		entity.addComponent(new Transform(new Vector(400, 310)));
+
+		var textComponent = new TextDrawable("Defeat!");
+		textComponent.font = "92px Courier";
+		textComponent.fontColor = WalterColors.defeatRed;
+		textComponent.alignment = "center"
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.defeatEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("quit text text footer");	
+		entity.addComponent(new Transform(new Vector(400, 444)));
+
+		var textComponent = new TextDrawable("[spacebar] to retry");
+		textComponent.font = "20px Courier";
+		textComponent.fontColor = WalterColors.defeatRed;
+		textComponent.z = 11;
+		textComponent.alignment = "center"
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.defeatEntities.push(entity);
+	}
+
+	{
+		var entity = new Entity("defeat text footer");	
+		entity.addComponent(new Transform(new Vector(400, 480)));
+
+		var textComponent = new TextDrawable("[esc] to end");
+		textComponent.font = "20px Courier";
+		textComponent.fontColor = WalterColors.defeatRed;
+		textComponent.z = 11;
+		textComponent.alignment = "center"
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+		this.defeatEntities.push(entity);
+	}
+}
+
 GameScene.prototype.setupVictory = function() {
 	{
 		var entity = new Entity("victory full background");	
@@ -618,6 +793,7 @@ GameScene.prototype.setupBase = function() {
 		entity.addComponent(this.rightWing);
 
 		this.addEntity(entity);
+		this.walterEntities.push(entity);
 	}
 
 	{
@@ -634,6 +810,7 @@ GameScene.prototype.setupBase = function() {
 		entity.addComponent(this.leftWing);
 
 		this.addEntity(entity);
+		this.walterEntities.push(entity);
 	}
 
 	{
@@ -647,8 +824,10 @@ GameScene.prototype.setupBase = function() {
 
 		this.walter = new Walter(this.rightWing, this.leftWing, transform, this);
 		entity.addComponent(this.walter);
+		entity.addComponent(new CircleBody());
 
 		this.addEntity(entity);
+		this.walterEntities.push(entity);
 	}
 
 	{
@@ -671,7 +850,6 @@ GameScene.prototype.setupBase = function() {
 		entity.addComponent(this.progressRectDrawable);
 		this.addEntity(entity);
 	}
-
 
 	{
 		var entity = new Entity("ground");	

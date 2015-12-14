@@ -34,6 +34,7 @@ function Walter(rightWing, leftWing, transform, scene) {
 	drawable.z = 3;
 	rightEntity.addComponent(drawable);
 	this.scene.addEntity(rightEntity);
+	this.scene.walterEntities.push(rightEntity);
 
 	this.leftDown = false;
 	this.leftDownDuration = 0;
@@ -53,6 +54,7 @@ function Walter(rightWing, leftWing, transform, scene) {
 	drawable.z = 3;
 	leftEntity.addComponent(drawable);
 	this.scene.addEntity(leftEntity);
+	this.scene.walterEntities.push(leftEntity);
 }
 
 Walter.prototype.lDown = function() {

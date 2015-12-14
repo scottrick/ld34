@@ -12,7 +12,7 @@ GameSystem.prototype.handleEntity = function(scene, entity, deltaTime) {
 	var sceneComponent = entity.components[SceneComponent.type];
 	var gameScene = sceneComponent.gamescene;
 
-	if (!gameScene.hasStarted) {
+	if (!gameScene.hasStarted && !gameScene.isShowingDefeat) {
 		gameScene.timeToStart -= deltaTime;
 
 		if (gameScene.timeToStart <= 0) {
