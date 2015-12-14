@@ -25,7 +25,7 @@ var Level = function() {
 	this.nextLevel = null;
 };
 
-Level.groundSize = 50;
+Level.groundSize = 48;
 Level.airSize = 60;
 
 /* setup this level on the given scene */

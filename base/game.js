@@ -132,10 +132,18 @@ Game.setNextScene = function(nextScene) {
 }
 
 Game.handleKeyDown = function(key) {
+	if (Game.scene == null) {
+		return;
+	}
+
 	Game.scene.handleKeyDown(key);
 }
 
 Game.handleKeyUp = function(key) {
+	if (Game.scene == null) {
+		return;
+	}
+
 	Game.scene.handleKeyUp(key);
 
 	if (Game.DEBUG) {

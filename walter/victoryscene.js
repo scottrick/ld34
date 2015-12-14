@@ -25,6 +25,7 @@ VictoryScene.prototype.setup = function() {
 	this.addSystem(new ExplosionSystem());
 	this.addSystem(new FireworkSystem());
 	this.addSystem(new SparkSystem());
+	this.addSystem(new BoundarySystem(new Rect(-50, -50, 900, 700)));
 
 	{
 		var titleTextEntity = new Entity("title text");	

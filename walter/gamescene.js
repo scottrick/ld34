@@ -775,7 +775,7 @@ GameScene.prototype.setupVictory = function() {
 GameScene.prototype.setupBase = function() {
 	var walterWidth = 32;
 	var walterHidth = 60;
-	
+
 	var wingWidth = 28;
 	var wingHeight = 32;
 
@@ -803,7 +803,7 @@ GameScene.prototype.setupBase = function() {
 		entity.addComponent(transform);
 
 		var wingImage = this.game.getImages().getLeftWing();
-		var imageDrawable = new ImageDrawable(wingImage, new Rect(32, 0, -64, wingHeight));
+		var imageDrawable = new ImageDrawable(wingImage, new Rect(-32, 0, 64, wingHeight));
 		imageDrawable.z = 4;
 		entity.addComponent(imageDrawable);
 

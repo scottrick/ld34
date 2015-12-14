@@ -137,8 +137,8 @@ CollisionSystem.prototype.checkCollision = function(e1, e2) {
 		var distanceSquared = 	(transform1.position.x - transform2.position.x) * (transform1.position.x - transform2.position.x) +
 								(transform1.position.y - transform2.position.y) * (transform1.position.y - transform2.position.y);
 
-		var scale1 = transform1.scale.x / 2;
-		var scale2 = transform2.scale.x / 2;
+		var scale1 = transform1.scale.y / 2;
+		var scale2 = transform2.scale.y / 2;
 		var radiusSquared = (scale1 + scale2) * (scale1 + scale2);
 
 		if (radiusSquared >= distanceSquared) {

@@ -19,5 +19,10 @@ ImageDrawable.prototype.toString = function() {
 }
 
 ImageDrawable.prototype.draw = function(context) {
-	context.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.rect.x, this.rect.y, this.rect.w, this.rect.h);
+	if (this.rect.w < 0 || this.rect.h < 0) {
+		console.log("ImageDrawable: Invalid width or height.");
+	}
+	else {
+		context.drawImage(this.image, 0, 0, this.image.width, this.image.height, this.rect.x, this.rect.y, this.rect.w, this.rect.h);
+	}
 }
