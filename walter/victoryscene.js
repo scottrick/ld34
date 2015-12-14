@@ -22,11 +22,14 @@ VictoryScene.prototype.setup = function() {
 	this.addSystem(new FireSystem());
 	this.addSystem(new FlameSystem());
 	this.addSystem(new MovementSystem());
+	this.addSystem(new ExplosionSystem());
+	this.addSystem(new FireworkSystem());
+	this.addSystem(new SparkSystem());
 
 	{
 		var titleTextEntity = new Entity("title text");	
-		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, 4));
-		var textComponent = new TextDrawable("Victory!");
+		titleTextEntity.addComponent(new Transform(new Vector(400, 150), null, 0));
+		var textComponent = new TextDrawable("The End!");
 		textComponent.font = "120px Courier";
 		textComponent.fontColor = WalterColors.victoryGreen;
 		textComponent.alignment = "center"
@@ -34,92 +37,111 @@ VictoryScene.prototype.setup = function() {
 		this.addEntity(titleTextEntity);
 	}
 
-	// {
-	// 	var subtitleTextEntity = new Entity("subtitle text");	
-	// 	subtitleTextEntity.addComponent(new Transform(new Vector(400, 224), null, 0));
-	// 	var textComponent = new TextDrawable("Wizard for Hire");
-	// 	textComponent.font = "40px Courier";
-	// 	textComponent.fontColor = WalterColors.owlLightBrown;
-	// 	textComponent.alignment = "center"
-	// 	subtitleTextEntity.addComponent(textComponent);
-	// 	this.addEntity(subtitleTextEntity);
-	// }
+	{
+		var subtitleTextEntity = new Entity("subtitle text");	
+		subtitleTextEntity.addComponent(new Transform(new Vector(400, 300), null, 0));
+		var textComponent = new TextDrawable("You and Walter are heroes!");
+		textComponent.font = "40px Courier";
+		textComponent.fontColor = WalterColors.creditYellow;
+		textComponent.alignment = "center"
+		subtitleTextEntity.addComponent(textComponent);
+		this.addEntity(subtitleTextEntity);
+	}
 
-	// {
-	// 	var entity = new Entity("start game text");	
-	// 	entity.addComponent(new Transform(new Vector(20, 440), null, 0));
-	// 	var textComponent = new TextDrawable("Press [spacebar]");
-	// 	textComponent.font = "24px Courier";
-	// 	textComponent.fontColor = WalterColors.owlLightBrown;
-	// 	entity.addComponent(textComponent);
-	// 	this.addEntity(entity);
-	// }
+	{
+		var subtitleTextEntity = new Entity("subtitle text");	
+		subtitleTextEntity.addComponent(new Transform(new Vector(400, 336), null, 0));
+		var textComponent = new TextDrawable("Well, mainly Walter...");
+		textComponent.font = "22px Courier";
+		textComponent.fontColor = WalterColors.creditYellow;
+		textComponent.alignment = "center"
+		subtitleTextEntity.addComponent(textComponent);
+		this.addEntity(subtitleTextEntity);
+	}
 
-	// {
-	// 	var walterSplashEntity = new Entity("walter corner");	
-	// 	walterSplashEntity.addComponent(new Transform());
-	// 	var imageDrawable = new ImageDrawable(this.game.getImages().getSplashWalter(), new Rect(404, 118, 396, 482));
-	// 	imageDrawable.z = -5;
-	// 	walterSplashEntity.addComponent(imageDrawable);
-	// 	this.addEntity(walterSplashEntity);
-	// }
 
-	// {
-	// 	var forestBackgroundEntity = new Entity("forest background");	
-	// 	forestBackgroundEntity.addComponent(new Transform());
-	// 	var imageDrawable = new ImageDrawable(this.game.getImages().getForestBackground(), new Rect(0, 0, 800, 600));
-	// 	imageDrawable.z = -11;
-	// 	forestBackgroundEntity.addComponent(imageDrawable);
-	// 	this.addEntity(forestBackgroundEntity);
-	// }
+	{
+		var entity = new Entity("end text footer");	
+		entity.addComponent(new Transform(new Vector(20, 480)));
 
-	// {
-	// 	var entity = new Entity("dark text background");	
-	// 	entity.addComponent(new Transform());
+		var textComponent = new TextDrawable("Email: scottrick49@gmail.com");;
+		textComponent.font = "16px Courier";
+		textComponent.fontColor = WalterColors.creditYellow;
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
 
-	// 	var rectDrawable = new RectDrawable(new Rect(0, 58, 800, 192));
-	// 	rectDrawable.fillColor = "#000";
-	// 	rectDrawable.alpha = 0.5;
-	// 	rectDrawable.lineWidth = "2";
-	// 	rectDrawable.z = -5;
-	// 	entity.addComponent(rectDrawable);
+		this.addEntity(entity);
+	}
 
-	// 	this.addEntity(entity);
-	// }
+	{
+		var entity = new Entity("end text footer");	
+		entity.addComponent(new Transform(new Vector(20, 500)));
 
-	// {
-	// 	var entity = new Entity("backwardsR");	
-	// 	entity.addComponent(new Transform());
-	// 	var imageDrawable = new ImageDrawable(this.game.getImages().getBackwardsR(), new Rect(294, 114, 51, 50));
-	// 	entity.addComponent(imageDrawable);
-	// 	this.addEntity(entity);
-	// }
+		var textComponent = new TextDrawable("Source: scottrick.github.io/ld34");;
+		textComponent.font = "16px Courier";
+		textComponent.fontColor = WalterColors.creditYellow;
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
 
-	// var fireStartX = 386;
+		this.addEntity(entity);
+	}
 
-	// {
-	// 	var forestBackgroundEntity = new Entity("fire feather");	
-	// 	forestBackgroundEntity.addComponent(new Transform());
-	// 	var imageDrawable = new ImageDrawable(this.game.getImages().getFireFeather(), new Rect(fireStartX, 560, 96, 40));
-	// 	imageDrawable.z = -10;
-	// 	forestBackgroundEntity.addComponent(imageDrawable);
-	// 	this.addEntity(forestBackgroundEntity);
-	// }
+	{
+		var entity = new Entity("end text footer");	
+		entity.addComponent(new Transform(new Vector(20, 520)));
 
-	// {
-	// 	var entity = new Entity("test fire");	
-	// 	var movement = new Movement(null, null, 360);
-	// 	var drawable = new ImageDrawable(this.game.getImages().getFireball());
+		var textComponent = new TextDrawable("All art, music, and code was created by Scott Atkins for Ludum Dare 34.");
+		textComponent.font = "16px Courier";
+		textComponent.fontColor = WalterColors.creditYellow;
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
 
-	// 	entity.addComponent(movement);
-	// 	entity.addComponent(drawable);
-	// 	entity.addComponent(new Transform(new Vector(fireStartX + 40, 532), new Vector(60, 60), null, -6));
-	// 	entity.addComponent(new Fire(3));
-	// 	this.addEntity(entity);
-	// }
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("end text footer");	
+		entity.addComponent(new Transform(new Vector(20, 560)));
+
+		var textComponent = new TextDrawable("[spacebar] to reset");
+		textComponent.font = "16px Courier";
+		textComponent.fontColor = WalterColors.spellBlue;
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("end text footer");	
+		entity.addComponent(new Transform(new Vector(20, 580)));
+
+		var textComponent = new TextDrawable("Thanks for taking the time to play my entry.  See you at the next Ludum Dare!");
+		textComponent.font = "16px Courier";
+		textComponent.fontColor = WalterColors.creditYellow;
+		textComponent.z = 11;
+		entity.addComponent(textComponent);
+
+		this.addEntity(entity);
+	}
+
+	{
+		var entity = new Entity("firework entity");	
+		entity.addComponent(new Fireworks());
+		this.addEntity(entity);
+	}	
+
+	{
+		var entity = new Entity("ground");	
+		entity.addComponent(new Transform());
+		var imageDrawable = new ImageDrawable(this.game.getImages().getGround(), new Rect(0, 540, 800, 60));
+		imageDrawable.z = -11;
+		entity.addComponent(imageDrawable);
+		this.addEntity(entity);
+	}
+
 }
 
 VictoryScene.prototype.getMusic = function() {
 	return theSounds.getTitleTrack();
 }
-

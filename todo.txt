@@ -1,13 +1,5 @@
 MUST HAVE
 ----------------------
-
-make end game scene
-	-> with fireworks?
-	-> goto beginning
-
-
-
-
 disable debug slow-mo / pause / new key
 	
 	turn off key print out

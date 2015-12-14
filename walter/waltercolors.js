@@ -8,3 +8,4 @@ WalterColors.owlBeak = "#D4A017";
 WalterColors.spellBlue = "#0af";
 WalterColors.victoryGreen = "#00a637";
 WalterColors.defeatRed = "#bf0000";
+WalterColors.creditYellow = "#FFD801";

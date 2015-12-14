@@ -17,11 +17,10 @@ TitleScene.prototype.handleKeyDown = function(key) {
 }
 
 TitleScene.prototype.handleKeyUp = function(key) {
-	console.log("key: " + key);
-
 	if (key == 32) {
 		//SPACEBAR start the game at the first level
-		this.game.setNextScene(new GameScene(this.game, new Level1()));
+		// this.game.setNextScene(new GameScene(this.game, new Level1()));
+		this.game.setNextScene(new VictoryScene(this.game));
 	}
 }
 

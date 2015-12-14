@@ -29,7 +29,7 @@ addEventListener("keyup", function (e) {
 		Game.handleKeyUp(e.keyCode);
 }, false);
 
-Game.DEBUG = true;
+Game.DEBUG = false;
 
 Game.updatesPerSecond = 60; /* Game state updates per second.  Updates are not skipped! */
 Game.drawsPerSecond = 60;	/* Target number of redraws per second.  Draws WILL be skipped if it gets behind. */
@@ -44,7 +44,7 @@ Game.prevUpdatesCounter = 0;
 Game.currDrawCounter = 0;
 Game.prevDrawCounter = 0;
 Game.fpsPrevTime = 0;
-Game.fpsDisplayEnabled = true;
+Game.fpsDisplayEnabled = false;
 
 Game.run = (function() {
 		var ticksPerUpdate = 1000 / Game.updatesPerSecond;
