@@ -20,4 +20,3 @@ CircleBody.prototype.isFullyContainedIn = function(transform, rect) {
 
 	return result;
 }
-
