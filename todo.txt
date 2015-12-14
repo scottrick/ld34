@@ -1,8 +1,6 @@
 MUST HAVE
 ----------------------
-disable debug slow-mo / pause / new key
-	
-	turn off key print out
+
 
 
 
@@ -11,7 +9,6 @@ EXTRA
 better sound effects
 
 rare burning monsters, huge eexplosions!
-
 	-> boss?
 
 if you release both charges at once, at full, then big explosion?

@@ -44,7 +44,7 @@ Game.prevUpdatesCounter = 0;
 Game.currDrawCounter = 0;
 Game.prevDrawCounter = 0;
 Game.fpsPrevTime = 0;
-Game.fpsDisplayEnabled = false;
+Game.fpsDisplayEnabled = true;
 
 Game.run = (function() {
 		var ticksPerUpdate = 1000 / Game.updatesPerSecond;
